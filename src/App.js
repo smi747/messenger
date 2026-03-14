@@ -1,11 +1,16 @@
 import Handlebars from "handlebars";
-import testTemplate from "./components/test/test.hbs?raw";
-import notFound from "./pages/notFound.hbs?raw";
+
+import chatList from "./pages/chatList.hbs?raw";
 import internalServerError from "./pages/internalServerError.hbs?raw";
+import logIn from "./pages/logIn.hbs?raw";
+import notFound from "./pages/notFound.hbs?raw";
+import signUp from "./pages/signUp.hbs?raw";
+import userProfile from "./pages/userProfile.hbs?raw";
 
-Handlebars.registerPartial("test", testTemplate); 
-
-document.getElementById('app').innerHTML = Handlebars.compile(testTemplate)();
+import footer from './components/Footer/footer.hbs?raw';
+import link from './components/Link/link.hbs?raw';
+Handlebars.registerPartial('Footer', footer);
+Handlebars.registerPartial('Link', link);
 
 
 export default class App {
@@ -18,11 +23,23 @@ export default class App {
 
   render() {
     let template;
-    if (this.state.currentPage === 'notFound') {
+    if (this.state.currentPage === 'chatList') {
+      template = Handlebars.compile(chatList);
+      this.appElement.innerHTML = template();
+    } else if (this.state.currentPage === 'internalServerError') {
+      template = Handlebars.compile(internalServerError);
+      this.appElement.innerHTML = template();
+    } else if (this.state.currentPage === 'logIn') {
+      template = Handlebars.compile(logIn);
+      this.appElement.innerHTML = template();
+    } else if (this.state.currentPage === 'notFound') {
       template = Handlebars.compile(notFound);
       this.appElement.innerHTML = template();
-    } else {
-      template = Handlebars.compile(internalServerError);
+    } else if (this.state.currentPage === 'signUp') {
+      template = Handlebars.compile(signUp);
+      this.appElement.innerHTML = template();
+    } else if (this.state.currentPage === 'userProfile') {
+      template = Handlebars.compile(userProfile);
       this.appElement.innerHTML = template();
     }
     this.attachEventListeners();
