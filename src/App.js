@@ -1,14 +1,14 @@
 import Handlebars from "handlebars";
 
-import chatList from "./pages/chatList.hbs?raw";
-import internalServerError from "./pages/internalServerError.hbs?raw";
-import logIn from "./pages/logIn.hbs?raw";
-import notFound from "./pages/notFound.hbs?raw";
-import signUp from "./pages/signUp.hbs?raw";
-import userProfile from "./pages/userProfile.hbs?raw";
+import chatList from "./pages/chatList/chatList.hbs?raw";
+import internalServerError from "./pages/internalServerError/internalServerError.hbs?raw";
+import logIn from "./pages/logIn/logIn.hbs?raw";
+import notFound from "./pages/notFound/notFound.hbs?raw";
+import signUp from "./pages/signUp/signUp.hbs?raw";
+import userProfile from "./pages/userProfile/userProfile.hbs?raw";
 
-import footer from './components/Footer/footer.hbs?raw';
-import link from './components/Link/link.hbs?raw';
+import footer from './components/footer/footer.hbs?raw';
+import link from './components/link/link.hbs?raw';
 Handlebars.registerPartial('Footer', footer);
 Handlebars.registerPartial('Link', link);
 
@@ -16,7 +16,7 @@ Handlebars.registerPartial('Link', link);
 export default class App {
   constructor() {
     this.state = {
-      currentPage: 'notFound',
+      currentPage: 'logIn',
     };
     this.appElement = document.getElementById('app');
   }

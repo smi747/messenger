@@ -1,1 +1,9 @@
-@use '../components/footer/footer.scss' as *;
+@use '../components/footer/footer.scss';
+@use '../components/link/link.scss';
+
+@use '../pages/chatList/chatList.scss';
+@use '../pages/internalServerError/internalServerError.scss';
+@use '../pages/logIn/logIn.scss';
+@use '../pages/notFound/notFound.scss';
+@use '../pages/signUp/signUp.scss';
+@use '../pages/userProfile/userProfile.scss';
