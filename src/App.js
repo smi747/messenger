@@ -2,13 +2,13 @@ import Handlebars from "handlebars";
 
 import {logInData} from "./pages/logIn/logInData.js";
 import {signUpData} from "./pages/signUp/signUpData.js";
+import userProfile from "./pages/userProfile/userProfileData.js";
 
 import chatList from "./pages/chatList/chatList.hbs?raw";
 import internalServerError from "./pages/internalServerError/internalServerError.hbs?raw";
 import logIn from "./pages/logIn/logIn.hbs?raw";
 import notFound from "./pages/notFound/notFound.hbs?raw";
 import signUp from "./pages/signUp/signUp.hbs?raw";
-import userProfile from "./pages/userProfile/userProfile.hbs?raw";
 
 import auth from './components/auth/auth.hbs?raw';
 import header from './components/header/header.hbs?raw';
@@ -22,9 +22,10 @@ Handlebars.registerPartial('Error', error);
 export default class App {
   constructor() {
     this.state = {
-      currentPage: 'logIn',
+      currentPage: 'userProfile',
     };
     this.appElement = document.getElementById('app');
+    this.eventUpdater = this.attachEventListeners.bind(this);
   }
 
   render() {
@@ -45,8 +46,8 @@ export default class App {
       template = Handlebars.compile(signUp);
       this.appElement.innerHTML = template({signUpData, isLogin: false});
     } else if (this.state.currentPage === 'userProfile') {
-      template = Handlebars.compile(userProfile);
-      this.appElement.innerHTML = template();
+      template = new userProfile(this.appElement, this.eventUpdater);
+      template.render();
     }
     this.attachEventListeners();
   }
