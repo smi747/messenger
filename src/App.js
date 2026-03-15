@@ -11,10 +11,10 @@ import signUp from "./pages/signUp/signUp.hbs?raw";
 import userProfile from "./pages/userProfile/userProfile.hbs?raw";
 
 import auth from './components/auth/auth.hbs?raw';
-import footer from './components/footer/footer.hbs?raw';
+import header from './components/header/header.hbs?raw';
 import link from './components/link/link.hbs?raw';
 Handlebars.registerPartial('Auth', auth);
-Handlebars.registerPartial('Footer', footer);
+Handlebars.registerPartial('Header', header);
 Handlebars.registerPartial('Link', link);
 
 export default class App {
@@ -50,8 +50,8 @@ export default class App {
   }
 
   attachEventListeners() {
-    const footerLinks = document.querySelectorAll('.footer-link');
-    footerLinks.forEach(link => {
+    const headerLinks = document.querySelectorAll('.header-link');
+    headerLinks.forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         this.changePage(e.target.dataset.page);
