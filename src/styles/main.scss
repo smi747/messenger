@@ -1,5 +1,8 @@
+@use "./reset.css";
+
 @use '../components/footer/footer.scss';
 @use '../components/link/link.scss';
+@use '../components/auth/auth.scss';
 
 @use '../pages/chatList/chatList.scss';
 @use '../pages/internalServerError/internalServerError.scss';

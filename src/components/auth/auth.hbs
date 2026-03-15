@@ -1,0 +1,17 @@
+<div class="auth">
+    <div class="auth__title">{{title}}</div>
+    <form class="auth__form">
+        <div class="auth__inputfields">
+        {{#each fields}}
+            <div class="auth__inputfield">
+                <label class="auth__label" for="{{this.name}}">{{this.label}}</label>
+                <input class="auth__input" id="{{this.name}}" name="{{this.name}}" type="{{this.inputType}}">
+            </div>
+        {{/each}}
+        </div>
+    <div class="auth__buttons">
+       <button class="auth__confirm">{{confirmButton}}</button>
+       <button class="auth__change">{{changeButton}}</button>
+    </div>
+    </form>
+</div>
