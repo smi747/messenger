@@ -3,6 +3,7 @@
 @use '../components/header/header.scss';
 @use '../components/link/link.scss';
 @use '../components/auth/auth.scss';
+@use '../components/error/error.scss';
 
 @use '../pages/chatList/chatList.scss';
 @use '../pages/internalServerError/internalServerError.scss';

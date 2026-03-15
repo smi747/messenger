@@ -13,9 +13,11 @@ import userProfile from "./pages/userProfile/userProfile.hbs?raw";
 import auth from './components/auth/auth.hbs?raw';
 import header from './components/header/header.hbs?raw';
 import link from './components/link/link.hbs?raw';
+import error from './components/error/error.hbs?raw';
 Handlebars.registerPartial('Auth', auth);
 Handlebars.registerPartial('Header', header);
 Handlebars.registerPartial('Link', link);
+Handlebars.registerPartial('Error', error);
 
 export default class App {
   constructor() {
