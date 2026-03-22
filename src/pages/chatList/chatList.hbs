@@ -8,19 +8,7 @@
             <input class="catalog__input" placeholder="Поиск">
         </div>
         <div class="catalog__list">
-            <div class="catalog__wrap">
-                <div class="catalog__element">
-                    <div class="catalog__avatar"></div>
-                    <div class="catalog__info">
-                        <div class="catalog__name">Имя</div>
-                        <div class="catalog__content">Содержимое</div>
-                    </div>
-                    <div class="catalog__details">
-                        <div class="catalog__time">10:00</div>
-                        <div class="catalog__indicator">1</div>
-                    </div>
-                </div>
-            </div>
+            {{> Chat name="Имя" content="Содержимое" time="10:00" indicator="1"}}
         </div>
     </div>
     <div class="chatlist__chat chat">
@@ -37,23 +25,10 @@
         </div>
         <div class="chat__content">
             <div class="chat__date">19 июня</div>
-            <div class="chat__message">Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
-Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
-                <div class="chat__details">
-                    <div class="chat__time">10:00</div>
-                </div>
-            </div>
-            <div class="chat__message chat__message_my">
-                Круто!
-                <div class="chat__details">
-                    <svg class="chat__checkmark" xmlns="http://www.w3.org/2000/svg" width="10" height="5" viewBox="0 0 10 5" fill="none">
-                        <line y1="-0.5" x2="3.765" y2="-0.5" transform="matrix(0.705933 0.708278 -0.705933 0.708278 0 2.04126)" stroke="#3369F3"/>
-                        <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 2.6582 4.70825)" stroke="#3369F3"/>
-                        <line y1="-0.5" x2="5.6475" y2="-0.5" transform="matrix(0.705933 -0.708278 0.705933 0.708278 5.31592 4.70825)" stroke="#3369F3"/>
-                    </svg>
-                    <div class="chat__time chat__time_my">10:00</div>
-                </div>
-            </div>
+            {{> Message content="Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
+Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро."
+                time="10:00" my=""}}
+            {{> Message content="Круто!" time="10:00" my="1"}}
         </div>
         <div class="chat__bottom">
             <input class="catalog__input" placeholder="Сообщение">

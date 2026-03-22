@@ -14,10 +14,15 @@ import auth from './components/auth/auth.hbs?raw';
 import header from './components/header/header.hbs?raw';
 import link from './components/link/link.hbs?raw';
 import error from './components/error/error.hbs?raw';
+import chat from './pages/chatList/components/chat.hbs?raw';
+import message from './pages/chatList/components/message.hbs?raw';
 Handlebars.registerPartial('Auth', auth);
 Handlebars.registerPartial('Header', header);
 Handlebars.registerPartial('Link', link);
 Handlebars.registerPartial('Error', error);
+Handlebars.registerPartial('Chat', chat);
+Handlebars.registerPartial('Message', message);
+
 
 export default class App {
   constructor() {
