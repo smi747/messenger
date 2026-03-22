@@ -22,7 +22,7 @@ Handlebars.registerPartial('Error', error);
 export default class App {
   constructor() {
     this.state = {
-      currentPage: 'userProfile',
+      currentPage: 'chatList',
     };
     this.appElement = document.getElementById('app');
     this.eventUpdater = this.attachEventListeners.bind(this);
