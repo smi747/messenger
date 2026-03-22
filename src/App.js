@@ -12,7 +12,7 @@ import signUp from "./pages/signUp/signUp.hbs?raw";
 
 import auth from './components/auth/auth.hbs?raw';
 import header from './components/header/header.hbs?raw';
-import link from './components/link/link.hbs?raw';
+import link from './components/linkElement/link.hbs?raw';
 import error from './components/error/error.hbs?raw';
 import chat from './pages/chatList/components/chat.hbs?raw';
 import message from './pages/chatList/components/message.hbs?raw';
