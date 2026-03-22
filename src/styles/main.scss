@@ -1,13 +1,13 @@
 @use "./reset.css";
 
-@use '../components/header/header.scss';
-@use '../components/linkElement/link.scss';
-@use '../components/auth/auth.scss';
-@use '../components/error/error.scss';
+@use "../components/header/header.scss";
+@use "../components/linkElement/link.scss";
+@use "../components/auth/auth.scss";
+@use "../components/error/error.scss";
 
-@use '../pages/chatList/chatList.scss';
-@use '../pages/internalServerError/internalServerError.scss';
-@use '../pages/logIn/logIn.scss';
-@use '../pages/notFound/notFound.scss';
-@use '../pages/signUp/signUp.scss';
-@use '../pages/userProfile/userProfile.scss';
+@use "../pages/chatList/chatList.scss";
+@use "../pages/internalServerError/internalServerError.scss";
+@use "../pages/logIn/logIn.scss";
+@use "../pages/notFound/notFound.scss";
+@use "../pages/signUp/signUp.scss";
+@use "../pages/userProfile/userProfile.scss";
