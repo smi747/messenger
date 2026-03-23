@@ -1,0 +1,22 @@
+{
+  "name": "messenger",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "vite build",
+    "start": "vite build && node server.js",
+    "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,scss,css}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "sass": "^1.98.0",
+    "vite": "^8.0.0"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "handlebars": "^4.7.8"
+  }
+}
