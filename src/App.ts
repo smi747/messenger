@@ -46,15 +46,15 @@ export default class App {
   }
 
   render(): void {
-    let template: any;
+    let template: Handlebars.TemplateDelegate;
 
     if (this.state.currentPage === "chatList") {
       template = Handlebars.compile(chatList);
-      this.appElement.innerHTML = template();
+      this.appElement.innerHTML = template({});
 
     } else if (this.state.currentPage === "internalServerError") {
       template = Handlebars.compile(internalServerError);
-      this.appElement.innerHTML = template();
+      this.appElement.innerHTML = template({});
 
     } else if (this.state.currentPage === "logIn") {
       template = Handlebars.compile(logIn);
@@ -62,7 +62,7 @@ export default class App {
 
     } else if (this.state.currentPage === "notFound") {
       template = Handlebars.compile(notFound);
-      this.appElement.innerHTML = template();
+      this.appElement.innerHTML = template({});
 
     } else if (this.state.currentPage === "signUp") {
       template = Handlebars.compile(signUp);
