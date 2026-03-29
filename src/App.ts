@@ -24,49 +24,76 @@ Handlebars.registerPartial("Chat", chat);
 Handlebars.registerPartial("Message", message);
 
 export default class App {
+  private state: {
+    currentPage: string;
+  };
+
+  private appElement: HTMLElement;
+  private eventUpdater: () => void;
+
   constructor() {
     this.state = {
       currentPage: "chatList",
     };
-    this.appElement = document.getElementById("app");
+
+    const element = document.getElementById("app");
+    if (!element) {
+      throw new Error("Element with id 'app' not found");
+    }
+
+    this.appElement = element;
     this.eventUpdater = this.attachEventListeners.bind(this);
   }
 
-  render() {
-    let template;
+  render(): void {
+    let template: any;
+
     if (this.state.currentPage === "chatList") {
       template = Handlebars.compile(chatList);
       this.appElement.innerHTML = template();
+
     } else if (this.state.currentPage === "internalServerError") {
       template = Handlebars.compile(internalServerError);
       this.appElement.innerHTML = template();
+
     } else if (this.state.currentPage === "logIn") {
       template = Handlebars.compile(logIn);
       this.appElement.innerHTML = template({ logInData, isLogin: true });
+
     } else if (this.state.currentPage === "notFound") {
       template = Handlebars.compile(notFound);
       this.appElement.innerHTML = template();
+
     } else if (this.state.currentPage === "signUp") {
       template = Handlebars.compile(signUp);
       this.appElement.innerHTML = template({ signUpData, isLogin: false });
+
     } else if (this.state.currentPage === "userProfile") {
-      template = new userProfile(this.appElement, this.eventUpdater);
-      template.render();
+      const profile = new userProfile(this.appElement, this.eventUpdater);
+      profile.render();
     }
+
     this.attachEventListeners();
   }
 
-  attachEventListeners() {
-    const headerLinks = document.querySelectorAll(".header-link");
+  attachEventListeners(): void {
+    const headerLinks = document.querySelectorAll<HTMLElement>(".header-link");
+
     headerLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
+      link.addEventListener("click", (e: Event) => {
         e.preventDefault();
-        this.changePage(e.target.dataset.page);
+
+        const target = e.currentTarget as HTMLElement;
+        const page = target.dataset.page;
+
+        if (page) {
+          this.changePage(page);
+        }
       });
     });
   }
 
-  changePage(page) {
+  changePage(page: string): void {
     this.state.currentPage = page;
     this.render();
   }

@@ -6,13 +6,15 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "build": "vite build",
-    "start": "vite build && node server.js",
+    "prebuild": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
+    "start": "tsc --noEmit && vite build && node server.js",
     "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,scss,css}\""
   },
   "devDependencies": {
     "prettier": "^3.8.1",
     "sass": "^1.98.0",
+    "typescript": "^6.0.2",
     "vite": "^8.0.0"
   },
   "dependencies": {
