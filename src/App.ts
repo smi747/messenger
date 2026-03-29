@@ -51,23 +51,18 @@ export default class App {
     if (this.state.currentPage === "chatList") {
       template = Handlebars.compile(chatList);
       this.appElement.innerHTML = template({});
-
     } else if (this.state.currentPage === "internalServerError") {
       template = Handlebars.compile(internalServerError);
       this.appElement.innerHTML = template({});
-
     } else if (this.state.currentPage === "logIn") {
       template = Handlebars.compile(logIn);
       this.appElement.innerHTML = template({ logInData, isLogin: true });
-
     } else if (this.state.currentPage === "notFound") {
       template = Handlebars.compile(notFound);
       this.appElement.innerHTML = template({});
-
     } else if (this.state.currentPage === "signUp") {
       template = Handlebars.compile(signUp);
       this.appElement.innerHTML = template({ signUpData, isLogin: false });
-
     } else if (this.state.currentPage === "userProfile") {
       const profile = new userProfile(this.appElement, this.eventUpdater);
       profile.render();

@@ -14,36 +14,19 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 19px 15px 4px 15px;
+  padding: 19px 15px 4px;
 }
 
 .catalog__button {
-  color: #999999;
-  font-family: "Inter", sans-serif;
+  color: #999;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 12px;
 }
 
 .catalog__search {
-  padding: 14px 15px 14px 15px;
+  padding: 14px 15px;
   border-bottom: 1px solid #eaeaea;
-}
-
-.catalog__input {
-  height: 32px;
-  width: 100%;
-  background-color: #efefef;
-  border-radius: 5px;
-  padding-left: 15px;
-  box-sizing: border-box;
-  font-family: "Inter", sans-serif;
-  font-weight: 500;
-  font-size: 12px;
-}
-
-.catalog__input::placeholder {
-  text-align: center;
-  color: #999999;
 }
 
 .catalog__wrap {
@@ -57,7 +40,7 @@
   justify-content: flex-start;
   gap: 10px;
   border-bottom: 1px solid #eaeaea;
-  padding: 15px 0 15px;
+  padding: 15px 0;
 }
 
 .catalog__wrap:hover {
@@ -87,23 +70,23 @@
 }
 
 .catalog__name {
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 600;
   font-size: 13px;
 }
 
 .catalog__content {
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 12px;
-  color: #999999;
+  color: #999;
 }
 
 .catalog__time {
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 9px;
-  color: #999999;
+  color: #999;
   padding-top: 2px;
 }
 
@@ -112,7 +95,7 @@
   height: 20px;
   border-radius: 50%;
   background-color: #3369f3;
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 11px;
   color: white;
@@ -158,14 +141,14 @@
   border-radius: 30px;
   padding-left: 15px;
   box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 12px;
-}
 
-.catalog__input::placeholder {
-  text-align: left;
-  color: #999999;
+  &::placeholder {
+    text-align: left;
+    color: #999;
+  }
 }
 
 .catalog__send {
@@ -174,7 +157,7 @@
   justify-content: center;
   align-items: center;
   color: white;
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 600;
   font-size: 16px;
   height: 28px;
@@ -200,7 +183,7 @@
 }
 
 .chat__name {
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 600;
   font-size: 13px;
 }
@@ -228,7 +211,7 @@
   flex-direction: column;
   justify-content: end;
   gap: 16px;
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 12px;
   -ms-overflow-style: none;
@@ -241,7 +224,7 @@
 
 .chat__date {
   align-self: center;
-  color: #999999;
+  color: #999;
 }
 
 .chat__message {
@@ -269,8 +252,8 @@
 }
 
 .chat__time {
-  color: #999999;
-  font-family: "Inter", sans-serif;
+  color: #999;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   font-size: 9px;
 }
