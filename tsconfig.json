@@ -11,5 +11,6 @@
     "sourceMap": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+    "include": ["src/**/*"]
 }
