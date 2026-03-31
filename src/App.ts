@@ -1,12 +1,12 @@
 import Handlebars from "handlebars";
 
-import { logInData } from "./pages/logIn/logInData.js";
+//import { logInData } from "./pages/logIn/logInData.js";
 import { signUpData } from "./pages/signUp/signUpData.js";
 import userProfile from "./pages/userProfile/userProfileData.js";
 
 import chatList from "./pages/chatList/chatList.hbs?raw";
 import internalServerError from "./pages/internalServerError/internalServerError.hbs?raw";
-import logIn from "./pages/logIn/logIn.hbs?raw";
+//import logIn from "./pages/logIn/logIn.hbs?raw";
 import notFound from "./pages/notFound/notFound.hbs?raw";
 import signUp from "./pages/signUp/signUp.hbs?raw";
 
@@ -22,6 +22,14 @@ Handlebars.registerPartial("Link", link);
 Handlebars.registerPartial("Error", error);
 Handlebars.registerPartial("Chat", chat);
 Handlebars.registerPartial("Message", message);
+
+import Link from './components/linkElement/link';
+import {registerComponent} from './framework/ComponentRegistry';
+
+registerComponent(Link);
+
+const form = new Link({ text: "Начальное состояние" });
+const FormElement = form.element();
 
 export default class App {
   private state: {
@@ -55,8 +63,10 @@ export default class App {
       template = Handlebars.compile(internalServerError);
       this.appElement.innerHTML = template({});
     } else if (this.state.currentPage === "logIn") {
-      template = Handlebars.compile(logIn);
-      this.appElement.innerHTML = template({ logInData, isLogin: true });
+      this.appElement.appendChild(FormElement as Node);
+    //} else if (this.state.currentPage === "logIn") {
+    //  template = Handlebars.compile(logIn);
+    //  this.appElement.innerHTML = template({ logInData, isLogin: true });
     } else if (this.state.currentPage === "notFound") {
       template = Handlebars.compile(notFound);
       this.appElement.innerHTML = template({});

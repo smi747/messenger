@@ -9,6 +9,7 @@ export default [
       globals: globals.browser,
       parser: tsParser,
       parserOptions: {
+        project: './tsconfig.json',
         sourceType: "module",
         ecmaVersion: "latest",
       },
@@ -18,10 +19,11 @@ export default [
     },
     rules: {
       ...tseslint.configs.recommended.rules,
-      "no-unused-vars": "error",
       "no-undef": "error",
       // вот это
       "sort-vars": "error",
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["error"]
     },
   },
 ];
