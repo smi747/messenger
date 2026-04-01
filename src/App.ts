@@ -1,14 +1,14 @@
 import Handlebars from "handlebars";
 
 //import { logInData } from "./pages/logIn/logInData.js";
-import { signUpData } from "./pages/signUp/signUpData.js";
+//import { signUpData } from "./pages/signUp/signUpData.js";
 import userProfile from "./pages/userProfile/userProfileData.js";
 
-import chatList from "./pages/chatList/chatList.hbs?raw";
-import internalServerError from "./pages/internalServerError/internalServerError.hbs?raw";
+//import chatList from "./pages/chatList/chatList.hbs?raw";
+//import internalServerError from "./pages/internalServerError/internalServerError.hbs?raw";
 //import logIn from "./pages/logIn/logIn.hbs?raw";
-import notFound from "./pages/notFound/notFound.hbs?raw";
-import signUp from "./pages/signUp/signUp.hbs?raw";
+//import notFound from "./pages/notFound/notFound.hbs?raw";
+//import signUp from "./pages/signUp/signUp.hbs?raw";
 
 import auth from "./components/auth/auth.hbs?raw";
 import header from "./components/header/header.hbs?raw";
@@ -23,13 +23,54 @@ Handlebars.registerPartial("Error", error);
 Handlebars.registerPartial("Chat", chat);
 Handlebars.registerPartial("Message", message);
 
-import Link from './components/linkElement/link';
 import {registerComponent} from './framework/ComponentRegistry';
+import Link from './components/linkElement/link';
+import Error_ from './components/error/error';
+import Auth from './components/auth/auth';
+import Header from './components/header/header';
+import Message from './pages/chatList/components/message';
+import Chat from './pages/chatList/components/chat';
+import ChatList from './pages/chatList/chatList';
+import NotFound from './pages/notFound/notFound';
+import LogIn from './pages/logIn/logIn';
+import SignUp from './pages/signUp/signUp';
+import InternalServerError from './pages/internalServerError/internalServerError';
 
 registerComponent(Link);
+registerComponent(Error_);
+registerComponent(Auth);
+registerComponent(Header);
+registerComponent(Message);
+registerComponent(Chat);
 
-const form = new Link({ text: "Начальное состояние" });
-const FormElement = form.element();
+const messages = [{content: "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.", my: "", time: "0:00"},{content: "Круто!", my: "1", time: "13:25"}];
+const chats = [{name: "Имя", content: "Содержимое", time: "10:00", indicator: "1"}];
+
+const ChatList_ = new ChatList({ messages: messages, chats: chats });
+const ChatListElement = ChatList_.element();
+
+const NotFound_ = new NotFound({  });
+const NotFoundElement = NotFound_.element();
+
+const InternalServerError_ = new InternalServerError({  });
+const InternalServerErrorElement = InternalServerError_.element();
+
+const LogIn_ = new LogIn({ fields: [
+  { label: "Логин", inputType: "text", name: "login" },
+  { label: "Пароль", inputType: "password", name: "password" },
+]});
+const LogInElement = LogIn_.element();
+
+const SignUp_ = new SignUp({ fields: [
+  { label: "Почта", inputType: "email", name: "email" },
+  { label: "Логин", inputType: "text", name: "login" },
+  { label: "Имя", inputType: "text", name: "second_name" },
+  { label: "Фамилия", inputType: "text", name: "first_name" },
+  { label: "Телефон", inputType: "tel", name: "phone" },
+  { label: "Пароль", inputType: "password", name: "password" },
+  { label: "Пароль (еще раз)", inputType: "password", name: "password_" },
+]});
+const SignUpElement = SignUp_.element();
 
 export default class App {
   private state: {
@@ -54,25 +95,22 @@ export default class App {
   }
 
   render(): void {
-    let template: Handlebars.TemplateDelegate;
 
     if (this.state.currentPage === "chatList") {
-      template = Handlebars.compile(chatList);
-      this.appElement.innerHTML = template({});
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(ChatListElement as Node);
     } else if (this.state.currentPage === "internalServerError") {
-      template = Handlebars.compile(internalServerError);
-      this.appElement.innerHTML = template({});
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(InternalServerErrorElement as Node);
     } else if (this.state.currentPage === "logIn") {
-      this.appElement.appendChild(FormElement as Node);
-    //} else if (this.state.currentPage === "logIn") {
-    //  template = Handlebars.compile(logIn);
-    //  this.appElement.innerHTML = template({ logInData, isLogin: true });
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(LogInElement as Node);
     } else if (this.state.currentPage === "notFound") {
-      template = Handlebars.compile(notFound);
-      this.appElement.innerHTML = template({});
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(NotFoundElement as Node);
     } else if (this.state.currentPage === "signUp") {
-      template = Handlebars.compile(signUp);
-      this.appElement.innerHTML = template({ signUpData, isLogin: false });
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(SignUpElement as Node);
     } else if (this.state.currentPage === "userProfile") {
       const profile = new userProfile(this.appElement, this.eventUpdater);
       profile.render();

@@ -1,6 +1,20 @@
 import Block from '../../framework/Block'
+import {BlockOwnProps} from '../../framework/Block'
 
-export default class auth extends Block {
+type Field = {
+    label: string;
+    inputType: string;
+    name: string;
+}
+
+interface AuthProps extends BlockOwnProps{
+    title:string;
+    confirmButton:string;
+    changeButton: string;
+    fields: Field[];
+}
+
+export default class Auth extends Block<AuthProps> {
   static componentName = 'Auth';
 
   protected template = `
@@ -17,7 +31,7 @@ export default class auth extends Block {
         </div>
         <div class="auth__buttons">
             <button type="submit" class="auth__confirm">{{confirmButton}}</button>
-            <div class="auth__change">{{> Link href="#" class="auth__link" data-page=changeLink text=changeButton}}</div>
+            <div class="auth__change">{{{ Link href="#" class="auth__link" data-page=changeLink text=changeButton }}}</div>
         </div>
     </form>
 </div>
