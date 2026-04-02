@@ -1,20 +1,20 @@
-import Block from '../../framework/Block'
-import {BlockOwnProps} from '../../framework/Block'
+import Block from "../../framework/Block";
+import { BlockOwnProps } from "../../framework/Block";
 
 type Field = {
     label: string;
     inputType: string;
     name: string;
-}
+};
 
-interface SignUpProps extends BlockOwnProps{
+interface SignUpProps extends BlockOwnProps {
     fields: Field[];
 }
 
 export default class SignUp extends Block<SignUpProps> {
-  static componentName = 'SignUp';
+    static componentName = "SignUp";
 
-  protected template = `
+    protected template = `
     <div class="loginform">
     {{{ Auth title="Регистраиця" fields=fields confirmButton="Зарегистрироваться" changeButton="Войти" changeLink="logIn" }}}
 {{{ Header }}}

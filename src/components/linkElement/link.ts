@@ -1,7 +1,7 @@
-import Block from '../../framework/Block'
-import {BlockOwnProps} from '../../framework/Block'
+import Block from "../../framework/Block";
+import { BlockOwnProps } from "../../framework/Block";
 
-interface LinkProps extends BlockOwnProps{
+interface LinkProps extends BlockOwnProps {
     href: string;
     class: string;
     "data-page": string;
@@ -10,9 +10,9 @@ interface LinkProps extends BlockOwnProps{
 }
 
 export default class Link extends Block<LinkProps> {
-  static componentName = 'Link';
+    static componentName = "Link";
 
-  protected template = `
+    protected template = `
     <a href="{{href}}" class="{{class}}" data-page="{{data-page}}" onclick="{{onclick}}">{{text}}</a>
   `;
 }

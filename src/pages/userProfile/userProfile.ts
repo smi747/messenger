@@ -1,58 +1,76 @@
-import Block from '../../framework/Block'
-import {BlockOwnProps} from '../../framework/Block'
+import Block from "../../framework/Block";
+import { BlockOwnProps } from "../../framework/Block";
 
 type State = {
-    noEdit:boolean;
-    passwordEdit:boolean;
-    dataEdit:boolean;
-}
+    noEdit: boolean;
+    passwordEdit: boolean;
+    dataEdit: boolean;
+};
 
 type DataString = {
-    name:string;
-    value:string;
-    name_:string;
-}
+    name: string;
+    value: string;
+    name_: string;
+};
 
 type UserProfileData = {
     name: string;
-    data:DataString[];
-}
+    data: DataString[];
+};
 
-interface UserProfileProps extends BlockOwnProps{
-    appElement:HTMLElement | null;
-    state:State;
-    eventUpdater: (() => void);
+interface UserProfileProps extends BlockOwnProps {
+    appElement: HTMLElement | null;
+    state: State;
+    eventUpdater: () => void;
     userProfileData: UserProfileData;
 }
 
 export default class UserProfile extends Block<UserProfileProps> {
-  static componentName = 'SignUp';
+    static componentName = "SignUp";
 
-  protected componentDidMount(): void {
-      Object.entries(this.refs).forEach(([name, link]) => {
-        if (name == "setPasswordEdit") {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                this.setProps({state: { noEdit: false, passwordEdit: true, dataEdit: false }});
-            });
-        };
-        if (name == "setDataEdit") {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                this.setProps({state: { noEdit: false, passwordEdit: false, dataEdit: true }});
-            });
-        };
-        if (name == "setNoEdit" || name == "setNoEdit_") {
-            link.addEventListener("click", (e) => {
-                e.preventDefault();
-                this.setProps({state: { noEdit: true, passwordEdit: false, dataEdit: false }});
-            });
-        };
-    });
-    this.props.eventUpdater();
-  }
+    protected componentDidMount(): void {
+        Object.entries(this.refs).forEach(([name, link]) => {
+            if (name == "setPasswordEdit") {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    this.setProps({
+                        state: {
+                            noEdit: false,
+                            passwordEdit: true,
+                            dataEdit: false,
+                        },
+                    });
+                });
+            }
+            if (name == "setDataEdit") {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    this.setProps({
+                        state: {
+                            noEdit: false,
+                            passwordEdit: false,
+                            dataEdit: true,
+                        },
+                    });
+                });
+            }
+            if (name == "setNoEdit" || name == "setNoEdit_") {
+                link.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    this.setProps({
+                        state: {
+                            noEdit: true,
+                            passwordEdit: false,
+                            dataEdit: false,
+                        },
+                    });
+                });
+            }
+        });
+        this.props.eventUpdater();
+    }
 
-  protected template = `
+    protected template = `
     {{#if state.noEdit}}
 <div class="profile">
     <div class="profile__content">

@@ -1,5 +1,5 @@
-import Block from '../../framework/Block'
-import {BlockOwnProps} from '../../framework/Block'
+import Block from "../../framework/Block";
+import { BlockOwnProps } from "../../framework/Block";
 
 type Message = {
     my: string;
@@ -12,17 +12,17 @@ type Chat = {
     content: string;
     time: string;
     indicator: string;
-}
+};
 
-interface ChatListProps extends BlockOwnProps{
+interface ChatListProps extends BlockOwnProps {
     messages: Message[];
     chats: Chat[];
 }
 
 export default class ChatList extends Block<ChatListProps> {
-  static componentName = 'ChatList';
+    static componentName = "ChatList";
 
-  protected template = `
+    protected template = `
     <div class="chatlist">
     <div class="chatlist__catalog catalog">
         <div class="catalog__functions">

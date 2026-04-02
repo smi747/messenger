@@ -1,9 +1,9 @@
-import Block from '../../framework/Block'
+import Block from "../../framework/Block";
 
 export default class Link extends Block {
-  static componentName = 'Header';
+    static componentName = "Header";
 
-  protected template = `
+    protected template = `
     <div class="header">
   <nav>
     {{{ Link href="#" class="header-link" data-page="logIn" text="logIn" }}}

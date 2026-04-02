@@ -1,16 +1,16 @@
-import Block from '../../../framework/Block'
-import {BlockOwnProps} from '../../../framework/Block'
+import Block from "../../../framework/Block";
+import { BlockOwnProps } from "../../../framework/Block";
 
-interface MessageProps extends BlockOwnProps{
+interface MessageProps extends BlockOwnProps {
     my: string;
     content: string;
     time: string;
 }
 
 export default class Message extends Block<MessageProps> {
-  static componentName = 'Message';
+    static componentName = "Message";
 
-  protected template = `
+    protected template = `
     <div class="chat__message {{#if my}}chat__message_my{{/if}}">
     {{content}}
         <div class="chat__details">

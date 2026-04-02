@@ -1,15 +1,15 @@
-import Block from '../../framework/Block'
-import {BlockOwnProps} from '../../framework/Block'
+import Block from "../../framework/Block";
+import { BlockOwnProps } from "../../framework/Block";
 
-interface ErrorProps extends BlockOwnProps{
-    code:string;
-    text:string;
+interface ErrorProps extends BlockOwnProps {
+    code: string;
+    text: string;
 }
 
 export default class Error extends Block<ErrorProps> {
-  static componentName = 'Error';
+    static componentName = "Error";
 
-  protected template = `
+    protected template = `
     <div class="error">
     <div class="error__code">{{code}}</div>
     <div class="error__name">{{text}}</div>

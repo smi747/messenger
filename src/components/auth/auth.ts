@@ -1,33 +1,33 @@
-import Block from '../../framework/Block'
-import {BlockOwnProps} from '../../framework/Block'
+import Block from "../../framework/Block";
+import { BlockOwnProps } from "../../framework/Block";
 
 type Field = {
     label: string;
     inputType: string;
     name: string;
-}
+};
 
-interface AuthProps extends BlockOwnProps{
-    title:string;
-    confirmButton:string;
+interface AuthProps extends BlockOwnProps {
+    title: string;
+    confirmButton: string;
     changeButton: string;
     fields: Field[];
 }
 
 export default class Auth extends Block<AuthProps> {
-  static componentName = 'Auth';
+    static componentName = "Auth";
 
-  protected events = {
-    submit: (event: Event) => {
-      event.preventDefault();
-      const formData = new FormData(this.refs.form as HTMLFormElement);
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-      }
-    }
-  }
+    protected events = {
+        submit: (event: Event) => {
+            event.preventDefault();
+            const formData = new FormData(this.refs.form as HTMLFormElement);
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}: ${value}`);
+            }
+        },
+    };
 
-  protected template = `
+    protected template = `
     <div class="auth">
     <div class="auth__title">{{title}}</div>
     <form class="auth__form" ref="form">
