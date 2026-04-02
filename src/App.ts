@@ -171,7 +171,7 @@ export default class App {
 
     constructor() {
         this.state = {
-            currentPage: "userProfile",
+            currentPage: "logIn",
         };
 
         const element = document.getElementById("app");
