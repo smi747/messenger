@@ -6,44 +6,27 @@
 
 .chatlist__catalog {
     width: 356px;
-    background-color: #FBFBFB;
-    border-right: solid 1px #EAEAEA;
+    background-color: #fbfbfb;
+    border-right: solid 1px #eaeaea;
 }
 
 .catalog__functions {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding: 19px 15px 4px 15px;
+    padding: 19px 15px 4px;
 }
 
 .catalog__button {
-    color: #999999;
-    font-family: "Inter", sans-serif;
+    color: #999;
+    font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 12px;
 }
 
 .catalog__search {
-    padding: 14px 15px 14px 15px;
-    border-bottom: 1px solid #EAEAEA;
-}
-
-.catalog__input {
-    height: 32px;
-    width: 100%;
-    background-color: #EFEFEF;
-    border-radius: 5px;
-    padding-left: 15px;
-    box-sizing: border-box;
-    font-family: "Inter", sans-serif;
-    font-weight: 500;
-    font-size: 12px;
-}
-
-.catalog__input::placeholder {
-  text-align: center;
-  color: #999999;
+    padding: 14px 15px;
+    border-bottom: 1px solid #eaeaea;
 }
 
 .catalog__wrap {
@@ -56,12 +39,12 @@
     flex-direction: row;
     justify-content: flex-start;
     gap: 10px;
-    border-bottom: 1px solid #EAEAEA;
-    padding: 15px 0 15px;
+    border-bottom: 1px solid #eaeaea;
+    padding: 15px 0;
 }
 
 .catalog__wrap:hover {
-    background-color: #E4EDFD;
+    background-color: #e4edfd;
 }
 
 .catalog__avatar {
@@ -87,23 +70,23 @@
 }
 
 .catalog__name {
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 600;
     font-size: 13px;
 }
 
 .catalog__content {
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 12px;
-    color: #999999;
+    color: #999;
 }
 
 .catalog__time {
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 9px;
-    color: #999999;
+    color: #999;
     padding-top: 2px;
 }
 
@@ -111,8 +94,8 @@
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #3369F3;
-    font-family: "Inter", sans-serif;
+    background-color: #3369f3;
+    font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 11px;
     color: white;
@@ -136,7 +119,7 @@
     align-items: center;
     height: 52px;
     width: 100%;
-    border-bottom: solid 1px #EAEAEA;
+    border-bottom: solid 1px #eaeaea;
 }
 
 .chat__bottom {
@@ -148,24 +131,24 @@
     align-items: center;
     height: 52px;
     width: 100%;
-    border-top: solid 1px #EAEAEA;
+    border-top: solid 1px #eaeaea;
 }
 
 .catalog__input {
     height: 32px;
     width: 100%;
-    background-color: #EFEFEF;
+    background-color: #efefef;
     border-radius: 30px;
     padding-left: 15px;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 12px;
-}
 
-.catalog__input::placeholder {
-  text-align: left;
-  color: #999999;
+    &::placeholder {
+        text-align: left;
+        color: #999;
+    }
 }
 
 .catalog__send {
@@ -174,12 +157,12 @@
     justify-content: center;
     align-items: center;
     color: white;
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 600;
     font-size: 16px;
     height: 28px;
     width: 28px;
-    background-color:#3369F3;
+    background-color: #3369f3;
     border-radius: 50%;
 }
 
@@ -200,7 +183,7 @@
 }
 
 .chat__name {
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 600;
     font-size: 13px;
 }
@@ -228,7 +211,7 @@
     flex-direction: column;
     justify-content: end;
     gap: 16px;
-    font-family: "Inter", sans-serif;
+    font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 12px;
     -ms-overflow-style: none;
@@ -236,12 +219,12 @@
 }
 
 .chat__content::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .chat__date {
     align-self: center;
-    color: #999999;
+    color: #999;
 }
 
 .chat__message {
@@ -250,14 +233,14 @@
     flex-direction: row;
     padding: 11px;
     max-width: 400px;
-    background-color: #F8F8F8;
+    background-color: #f8f8f8;
     border-radius: 8px;
     align-self: flex-start;
 }
 
 .chat__message_my {
     align-self: end;
-    background-color: #E4EDFD;
+    background-color: #e4edfd;
 }
 
 .chat__details {
@@ -269,12 +252,12 @@
 }
 
 .chat__time {
-    color: #999999;
-    font-family: "Inter", sans-serif;
+    color: #999;
+    font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 9px;
 }
 
 .chat__time_my {
-    color: #3369F3;
+    color: #3369f3;
 }

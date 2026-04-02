@@ -1,1 +1,0 @@
-export const logInData = [{label: "Логин", inputType: "text", name: "login"}, {label: "Пароль", inputType: "password", name: "password"}];
