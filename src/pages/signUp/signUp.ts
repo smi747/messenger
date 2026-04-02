@@ -4,8 +4,8 @@ import { BlockOwnProps } from "../../framework/Block";
 type Field = {
     label: string;
     inputType: string;
-    name:string;
-    errortext:string;
+    name: string;
+    errortext: string;
     content: string;
 };
 

@@ -1,16 +1,16 @@
 import Block from "../../framework/Block";
 import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
-import {validateField} from "../../utils/validate";
+import { validateField } from "../../utils/validate";
 
 type FieldName =
-  | "first_name"
-  | "second_name"
-  | "login"
-  | "email"
-  | "password"
-  | "phone"
-  | "message";
+    | "first_name"
+    | "second_name"
+    | "login"
+    | "email"
+    | "password"
+    | "phone"
+    | "message";
 
 type State = {
     noEdit: boolean;
@@ -22,8 +22,8 @@ type Field = {
     label: string;
     inputType: string;
     name: string;
-    errortext:string;
-    content:string;
+    errortext: string;
+    content: string;
 };
 
 interface UserProfileProps extends BlockOwnProps {
@@ -40,25 +40,27 @@ export default class UserProfile extends Block<UserProfileProps> {
     protected events = {
         focusout: (event: Event) => {
             event.stopPropagation();
-                let error = validateField((event.target as HTMLInputElement).name, (event.target as HTMLInputElement).value);
-                let tmp = [...this.props.fields];
-                if (error) {
-                    tmp.forEach((obj) => {
-                        if (obj.name == (event.target as HTMLInputElement).name) {
-                            obj.content = (event.target as HTMLInputElement).value;
-                            obj.errortext = error;
-                        }
-                    });
-                }
-                else {
-                    tmp.forEach((obj) => {
-                        if (obj.name == (event.target as HTMLInputElement).name) {
-                            obj.content = (event.target as HTMLInputElement).value;
-                            obj.errortext = "";
-                        }
-                    });
-                }
-                this.setProps({fields: tmp});
+            let error = validateField(
+                (event.target as HTMLInputElement).name,
+                (event.target as HTMLInputElement).value,
+            );
+            let tmp = [...this.props.fields];
+            if (error) {
+                tmp.forEach((obj) => {
+                    if (obj.name == (event.target as HTMLInputElement).name) {
+                        obj.content = (event.target as HTMLInputElement).value;
+                        obj.errortext = error;
+                    }
+                });
+            } else {
+                tmp.forEach((obj) => {
+                    if (obj.name == (event.target as HTMLInputElement).name) {
+                        obj.content = (event.target as HTMLInputElement).value;
+                        obj.errortext = "";
+                    }
+                });
+            }
+            this.setProps({ fields: tmp });
         },
 
         submit: (event: Event) => {
@@ -70,19 +72,21 @@ export default class UserProfile extends Block<UserProfileProps> {
                 let tmp = [...this.props.fields];
                 tmp.forEach((obj) => {
                     if (validationErrors[obj.name as FieldName]) {
-                        obj.errortext=validationErrors[obj.name as FieldName] as string;
+                        obj.errortext = validationErrors[
+                            obj.name as FieldName
+                        ] as string;
                     } else {
-                        obj.errortext="";
+                        obj.errortext = "";
                     }
                 });
-                this.setProps({ fields: tmp});
+                this.setProps({ fields: tmp });
                 return;
             }
             let tmp = [...this.props.fields];
-            tmp.forEach((obj:Field) => {
-                obj.errortext="";
+            tmp.forEach((obj: Field) => {
+                obj.errortext = "";
             });
-            this.setProps({ fields: tmp});
+            this.setProps({ fields: tmp });
 
             for (let [key, value] of formData.entries()) {
                 console.log(`${key}: ${value}`);

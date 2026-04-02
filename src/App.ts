@@ -32,12 +32,48 @@ const chats = [
     { name: "Имя", content: "Содержимое", time: "10:00", indicator: "1" },
 ];
 const userProfileData = [
-        { label: "Почта", inputType:"", name:"email", errortext:"", content: "pochta@yandex.ru" },
-        { label: "Логин", inputType:"", name:"login", errortext:"", content: "ivanivanov" },
-        { label: "Имя", inputType:"", name:"second_name", errortext:"", content: "Иван" },
-        { label: "Фамилия", inputType:"", name:"first_name", errortext:"", content: "Иванов" },
-        { label: "Имя в чате", inputType:"", name:"display_name", errortext:"", content: "Иван" },
-        { label: "Телефон", inputType:"", name:"phone", errortext:"", content: "8 800 000 00 00" }
+    {
+        label: "Почта",
+        inputType: "",
+        name: "email",
+        errortext: "",
+        content: "pochta@yandex.ru",
+    },
+    {
+        label: "Логин",
+        inputType: "",
+        name: "login",
+        errortext: "",
+        content: "ivanivanov",
+    },
+    {
+        label: "Имя",
+        inputType: "",
+        name: "second_name",
+        errortext: "",
+        content: "Иван",
+    },
+    {
+        label: "Фамилия",
+        inputType: "",
+        name: "first_name",
+        errortext: "",
+        content: "Иванов",
+    },
+    {
+        label: "Имя в чате",
+        inputType: "",
+        name: "display_name",
+        errortext: "",
+        content: "Иван",
+    },
+    {
+        label: "Телефон",
+        inputType: "",
+        name: "phone",
+        errortext: "",
+        content: "8 800 000 00 00",
+    },
 ];
 
 const ChatList_ = new ChatList({ messages: messages, chats: chats });
@@ -51,21 +87,75 @@ const InternalServerErrorElement = InternalServerError_.element();
 
 const LogIn_ = new LogIn({
     fields: [
-        { label: "Логин", inputType: "text", name: "login", errortext:"", content:"" },
-        { label: "Пароль", inputType: "password", name: "password", errortext:"", content:"" },
+        {
+            label: "Логин",
+            inputType: "text",
+            name: "login",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Пароль",
+            inputType: "password",
+            name: "password",
+            errortext: "",
+            content: "",
+        },
     ],
 });
 const LogInElement = LogIn_.element();
 
 const SignUp_ = new SignUp({
     fields: [
-        { label: "Почта", inputType: "email", name: "email", errortext:"", content:""  },
-        { label: "Логин", inputType: "text", name: "login", errortext:"", content:""  },
-        { label: "Имя", inputType: "text", name: "second_name", errortext:"", content:""  },
-        { label: "Фамилия", inputType: "text", name: "first_name", errortext:"", content:""  },
-        { label: "Телефон", inputType: "tel", name: "phone", errortext:"", content:""  },
-        { label: "Пароль", inputType: "password", name: "password", errortext:"", content:""  },
-        { label: "Пароль (еще раз)", inputType: "password", name: "password_", errortext:"", content:""  },
+        {
+            label: "Почта",
+            inputType: "email",
+            name: "email",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Логин",
+            inputType: "text",
+            name: "login",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Имя",
+            inputType: "text",
+            name: "second_name",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Фамилия",
+            inputType: "text",
+            name: "first_name",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Телефон",
+            inputType: "tel",
+            name: "phone",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Пароль",
+            inputType: "password",
+            name: "password",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Пароль (еще раз)",
+            inputType: "password",
+            name: "password_",
+            errortext: "",
+            content: "",
+        },
     ],
 });
 const SignUpElement = SignUp_.element();
