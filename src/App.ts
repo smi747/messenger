@@ -31,17 +31,14 @@ const messages = [
 const chats = [
     { name: "Имя", content: "Содержимое", time: "10:00", indicator: "1" },
 ];
-const userProfileData = {
-    name: "Иван",
-    data: [
-        { name: "Почта", value: "pochta@yandex.ru", name_: "email" },
-        { name: "Логин", value: "ivanivanov", name_: "login" },
-        { name: "Имя", value: "Иван", name_: "second_name" },
-        { name: "Фамилия", value: "Иванов", name_: "first_name" },
-        { name: "Имя в чате", value: "Иван", name_: "display_name" },
-        { name: "Телефон", value: "8 800 000 00 00", name_: "phone" },
-    ],
-};
+const userProfileData = [
+        { label: "Почта", inputType:"", name:"email", errortext:"", content: "pochta@yandex.ru" },
+        { label: "Логин", inputType:"", name:"login", errortext:"", content: "ivanivanov" },
+        { label: "Имя", inputType:"", name:"second_name", errortext:"", content: "Иван" },
+        { label: "Фамилия", inputType:"", name:"first_name", errortext:"", content: "Иванов" },
+        { label: "Имя в чате", inputType:"", name:"display_name", errortext:"", content: "Иван" },
+        { label: "Телефон", inputType:"", name:"phone", errortext:"", content: "8 800 000 00 00" }
+];
 
 const ChatList_ = new ChatList({ messages: messages, chats: chats });
 const ChatListElement = ChatList_.element();
@@ -54,21 +51,21 @@ const InternalServerErrorElement = InternalServerError_.element();
 
 const LogIn_ = new LogIn({
     fields: [
-        { label: "Логин", inputType: "text", name: "login" },
-        { label: "Пароль", inputType: "password", name: "password" },
+        { label: "Логин", inputType: "text", name: "login", errortext:"", content:"" },
+        { label: "Пароль", inputType: "password", name: "password", errortext:"", content:"" },
     ],
 });
 const LogInElement = LogIn_.element();
 
 const SignUp_ = new SignUp({
     fields: [
-        { label: "Почта", inputType: "email", name: "email" },
-        { label: "Логин", inputType: "text", name: "login" },
-        { label: "Имя", inputType: "text", name: "second_name" },
-        { label: "Фамилия", inputType: "text", name: "first_name" },
-        { label: "Телефон", inputType: "tel", name: "phone" },
-        { label: "Пароль", inputType: "password", name: "password" },
-        { label: "Пароль (еще раз)", inputType: "password", name: "password_" },
+        { label: "Почта", inputType: "email", name: "email", errortext:"", content:""  },
+        { label: "Логин", inputType: "text", name: "login", errortext:"", content:""  },
+        { label: "Имя", inputType: "text", name: "second_name", errortext:"", content:""  },
+        { label: "Фамилия", inputType: "text", name: "first_name", errortext:"", content:""  },
+        { label: "Телефон", inputType: "tel", name: "phone", errortext:"", content:""  },
+        { label: "Пароль", inputType: "password", name: "password", errortext:"", content:""  },
+        { label: "Пароль (еще раз)", inputType: "password", name: "password_", errortext:"", content:""  },
     ],
 });
 const SignUpElement = SignUp_.element();
@@ -84,7 +81,7 @@ export default class App {
 
     constructor() {
         this.state = {
-            currentPage: "chatList",
+            currentPage: "userProfile",
         };
 
         const element = document.getElementById("app");
@@ -99,7 +96,8 @@ export default class App {
             appElement: this.appElement,
             state: { noEdit: true, passwordEdit: false, dataEdit: false },
             eventUpdater: this.eventUpdater,
-            userProfileData,
+            name: "Иван",
+            fields: userProfileData,
         });
     }
 

@@ -56,10 +56,10 @@ export default class ChatList extends Block<ChatListProps> {
                 {{{ Message content=this.content time=this.time my=this.my }}}
              {{/each}}
         </div>
-        <div class="chat__bottom">
+        <form class="chat__bottom" ref="form">
             <input class="catalog__input" placeholder="Сообщение" name="message">
-            <button class="catalog__send">→</button>
-        </div>
+            <button type="submit" class="catalog__send">→</button>
+        </form>
     </div>
 
 {{{ Header }}}

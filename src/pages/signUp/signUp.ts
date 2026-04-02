@@ -4,7 +4,9 @@ import { BlockOwnProps } from "../../framework/Block";
 type Field = {
     label: string;
     inputType: string;
-    name: string;
+    name:string;
+    errortext:string;
+    content: string;
 };
 
 interface SignUpProps extends BlockOwnProps {
