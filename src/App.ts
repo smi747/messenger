@@ -2,7 +2,7 @@ import Handlebars from "handlebars";
 
 //import { logInData } from "./pages/logIn/logInData.js";
 //import { signUpData } from "./pages/signUp/signUpData.js";
-import userProfile from "./pages/userProfile/userProfileData.js";
+//import userProfile from "./pages/userProfile/userProfileData.js";
 
 //import chatList from "./pages/chatList/chatList.hbs?raw";
 //import internalServerError from "./pages/internalServerError/internalServerError.hbs?raw";
@@ -35,6 +35,7 @@ import NotFound from './pages/notFound/notFound';
 import LogIn from './pages/logIn/logIn';
 import SignUp from './pages/signUp/signUp';
 import InternalServerError from './pages/internalServerError/internalServerError';
+import UserProfile from './pages/userProfile/userProfile';
 
 registerComponent(Link);
 registerComponent(Error_);
@@ -45,6 +46,17 @@ registerComponent(Chat);
 
 const messages = [{content: "Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.", my: "", time: "0:00"},{content: "Круто!", my: "1", time: "13:25"}];
 const chats = [{name: "Имя", content: "Содержимое", time: "10:00", indicator: "1"}];
+const userProfileData = {
+  name: "Иван",
+  data: [
+    { name: "Почта", value: "pochta@yandex.ru", name_: "email" },
+    { name: "Логин", value: "ivanivanov", name_: "login" },
+    { name: "Имя", value: "Иван", name_: "second_name" },
+    { name: "Фамилия", value: "Иванов", name_: "first_name" },
+    { name: "Имя в чате", value: "Иван", name_: "display_name" },
+    { name: "Телефон", value: "8 800 000 00 00", name_: "phone" },
+  ],
+};
 
 const ChatList_ = new ChatList({ messages: messages, chats: chats });
 const ChatListElement = ChatList_.element();
@@ -79,6 +91,7 @@ export default class App {
 
   private appElement: HTMLElement;
   private eventUpdater: () => void;
+  private UserProfile_: UserProfile;
 
   constructor() {
     this.state = {
@@ -92,6 +105,8 @@ export default class App {
 
     this.appElement = element;
     this.eventUpdater = this.attachEventListeners.bind(this);
+
+    this.UserProfile_ = new UserProfile({ appElement: this.appElement, state: {noEdit: true, passwordEdit: false, dataEdit: false}, eventUpdater: this.eventUpdater, userProfileData});
   }
 
   render(): void {
@@ -112,8 +127,8 @@ export default class App {
       this.appElement.innerHTML = "";
       this.appElement.appendChild(SignUpElement as Node);
     } else if (this.state.currentPage === "userProfile") {
-      const profile = new userProfile(this.appElement, this.eventUpdater);
-      profile.render();
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(this.UserProfile_.element() as Node);
     }
 
     this.attachEventListeners();
