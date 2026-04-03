@@ -1,4 +1,18 @@
-<div class="catalog__wrap">
+import Block from "../../../framework/Block";
+import { BlockOwnProps } from "../../../framework/Block";
+
+interface ChatProps extends BlockOwnProps {
+    name: string;
+    content: string;
+    time: string;
+    indicator: string;
+}
+
+export default class Chat extends Block<ChatProps> {
+    static componentName = "Chat";
+
+    protected template = `
+    <div class="catalog__wrap">
     <div class="catalog__element">
         <div class="catalog__avatar"></div>
         <div class="catalog__info">
@@ -11,3 +25,5 @@
         </div>
     </div>
 </div>
+  `;
+}
