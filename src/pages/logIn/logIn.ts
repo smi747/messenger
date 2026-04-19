@@ -18,7 +18,7 @@ export default class LogIn extends Block<LogInProps> {
 
     protected template = `
     <div class="loginform">
-    {{{ Auth title="Вход" fields=fields confirmButton="Авторизоваться" changeButton="Нет аккаунта?" changeLink="signUp" }}}
+    {{{ Auth title="Вход" fields=fields confirmButton="Авторизоваться" changeButton="Нет аккаунта?" changeLink="signUp" swap="/sign-up"}}}
     {{{ Header }}}
 </div>
   `;
