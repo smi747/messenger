@@ -29,13 +29,68 @@ type Field = {
 interface UserProfileProps extends BlockOwnProps {
     appElement: HTMLElement | null;
     state: State;
-    eventUpdater: () => void;
     name: string;
     fields: Field[];
 }
 
+const userProfileData = [
+    {
+        label: "Почта",
+        inputType: "",
+        name: "email",
+        errortext: "",
+        content: "pochta@yandex.ru",
+    },
+    {
+        label: "Логин",
+        inputType: "",
+        name: "login",
+        errortext: "",
+        content: "ivanivanov",
+    },
+    {
+        label: "Имя",
+        inputType: "",
+        name: "second_name",
+        errortext: "",
+        content: "Иван",
+    },
+    {
+        label: "Фамилия",
+        inputType: "",
+        name: "first_name",
+        errortext: "",
+        content: "Иванов",
+    },
+    {
+        label: "Имя в чате",
+        inputType: "",
+        name: "display_name",
+        errortext: "",
+        content: "Иван",
+    },
+    {
+        label: "Телефон",
+        inputType: "",
+        name: "phone",
+        errortext: "",
+        content: "8 800 000 00 00",
+    },
+];
+
+const default_props = {
+            appElement: document.getElementById("app"),
+            state: { noEdit: true, passwordEdit: false, dataEdit: false },
+            name: "Иван",
+            fields: userProfileData,
+        };
+
 export default class UserProfile extends Block<UserProfileProps> {
     static componentName = "SignUp";
+
+    constructor(props: UserProfileProps = default_props as UserProfileProps) {
+        super(props);
+    }
 
     protected events = {
         focusout: (event: Event) => {
@@ -133,7 +188,6 @@ export default class UserProfile extends Block<UserProfileProps> {
                 });
             }
         });
-        this.props.eventUpdater();
     }
 
     protected template = `

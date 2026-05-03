@@ -166,7 +166,6 @@ export default class App {
     };
 
     private appElement: HTMLElement;
-    private eventUpdater: () => void;
     private UserProfile_: UserProfile;
 
     constructor() {
@@ -180,12 +179,10 @@ export default class App {
         }
 
         this.appElement = element;
-        this.eventUpdater = this.attachEventListeners.bind(this);
 
         this.UserProfile_ = new UserProfile({
             appElement: this.appElement,
             state: { noEdit: true, passwordEdit: false, dataEdit: false },
-            eventUpdater: this.eventUpdater,
             name: "Иван",
             fields: userProfileData,
         });
