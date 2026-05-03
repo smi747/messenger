@@ -28,7 +28,6 @@ interface AuthProps extends BlockOwnProps {
     changeButton: string;
     fields: Field[];
     errors: Errors;
-    swap: string;
 }
 
 export default class Auth extends Block<AuthProps> {
@@ -106,7 +105,7 @@ export default class Auth extends Block<AuthProps> {
         </div>
         <div class="auth__buttons">
             <button type="submit" class="auth__confirm">{{confirmButton}}</button>
-            <div class="auth__change">{{{ Link href="#" class="auth__link" data-page=changeLink text=changeButton swap=swap }}}</div>
+            <div class="auth__change">{{{ Link href=swap class="auth__link" text=changeButton }}}</div>
         </div>
     </form>
 </div>
