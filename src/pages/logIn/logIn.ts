@@ -13,8 +13,29 @@ interface LogInProps extends BlockOwnProps {
     fields: Field[];
 }
 
+const fields = {fields: [
+        {
+            label: "Логин",
+            inputType: "text",
+            name: "login",
+            errortext: "",
+            content: "",
+        },
+        {
+            label: "Пароль",
+            inputType: "password",
+            name: "password",
+            errortext: "",
+            content: "",
+        },
+    ]};
+
 export default class LogIn extends Block<LogInProps> {
     static componentName = "LogIn";
+
+    constructor(props: LogInProps = fields as LogInProps) {
+        super(props);
+    }
 
     protected template = `
     <div class="loginform">
