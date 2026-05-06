@@ -12,6 +12,6 @@ export default class Link extends Block<LinkProps> {
     static componentName = "Link";
 
     protected template = `
-    <a href="{{href}}" class="{{class}}" data-page="{{data-page}}" onclick="{{onclick}}">{{text}}</a>
+    <a href="{{href}}" class="{{class}}" data-page="{{data-page}}" tabindex="0">{{text}}</a>
   `;
 }

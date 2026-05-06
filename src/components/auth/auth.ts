@@ -2,6 +2,7 @@ import Block from "../../framework/Block";
 import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
 import { validateField } from "../../utils/validate";
+import LoginController from "../../controllers/loginController.js";
 
 type FieldName =
     | "first_name"
@@ -28,36 +29,14 @@ interface AuthProps extends BlockOwnProps {
     changeButton: string;
     fields: Field[];
     errors: Errors;
+    type: string;
 }
 
 export default class Auth extends Block<AuthProps> {
     static componentName = "Auth";
+    private logincontroller = new LoginController();
 
     protected events = {
-        focusout: (event: Event) => {
-            event.stopPropagation();
-            let error = validateField(
-                (event.target as HTMLInputElement).name,
-                (event.target as HTMLInputElement).value,
-            );
-            let tmp = [...this.props.fields];
-            if (error) {
-                tmp.forEach((obj) => {
-                    if (obj.name == (event.target as HTMLInputElement).name) {
-                        obj.content = (event.target as HTMLInputElement).value;
-                        obj.errortext = error;
-                    }
-                });
-            } else {
-                tmp.forEach((obj) => {
-                    if (obj.name == (event.target as HTMLInputElement).name) {
-                        obj.content = (event.target as HTMLInputElement).value;
-                        obj.errortext = "";
-                    }
-                });
-            }
-            this.setProps({ fields: tmp });
-        },
 
         submit: (event: Event) => {
             event.preventDefault();
@@ -85,9 +64,44 @@ export default class Auth extends Block<AuthProps> {
             });
             this.setProps({ fields: tmp });
 
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
+            //for (let [key, value] of formData.entries()) {
+            //    console.log(`${key}: ${value}`);
+            //}
+            console.log(this.props.type);
+            if (this.props.type == "LogIn") {
+                this.logincontroller.login();
             }
+            if (this.props.type == "SignUp") {
+
+            }
+        },
+
+        focusout: (event: Event) => {
+            event.stopPropagation();
+            if ((event as FocusEvent).relatedTarget instanceof HTMLAnchorElement) {
+                return;
+            }
+            let error = validateField(
+                (event.target as HTMLInputElement).name,
+                (event.target as HTMLInputElement).value,
+            );
+            let tmp = [...this.props.fields];
+            if (error) {
+                tmp.forEach((obj) => {
+                    if (obj.name == (event.target as HTMLInputElement).name) {
+                        obj.content = (event.target as HTMLInputElement).value;
+                        obj.errortext = error;
+                    }
+                });
+            } else {
+                tmp.forEach((obj) => {
+                    if (obj.name == (event.target as HTMLInputElement).name) {
+                        obj.content = (event.target as HTMLInputElement).value;
+                        obj.errortext = "";
+                    }
+                });
+            }
+            this.setProps({ fields: tmp });
         },
     };
 
