@@ -18,7 +18,24 @@ export default class LoginController {
       //Router.go('/messenger');
 
     } catch (error) {
-      Store.setState('loginError', "Ошибка входа: проверьте логин или пароль");
+      Store.setState('loginError', JSON.parse(error.response).reason);
+    }
+  }
+
+    async signup(data) {
+    try {
+
+      const result = await loginAPI.signup(data);
+      if (result == "OK") {
+        Router.go('/messenger');
+      }
+
+      //.then(data => Store.set('user', data));
+
+      //Router.go('/messenger');
+
+    } catch (error) {
+      Store.setState('loginError', JSON.parse(error.response).reason);
     }
   }
 }

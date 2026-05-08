@@ -2,7 +2,7 @@ import Block from "../../framework/Block";
 import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
 import { validateField } from "../../utils/validate";
-import LoginController from "../../controllers/loginController.js";
+import LoginController from "../../controllers/auth.js";
 import Store from "../../framework/Store";
 
 type FieldName =
@@ -84,7 +84,7 @@ export default class Auth extends Block<AuthProps> {
                 this.logincontroller.login(data);
             }
             if (this.props.type == "SignUp") {
-
+                this.logincontroller.signup(data);
             }
         },
 
@@ -132,7 +132,7 @@ export default class Auth extends Block<AuthProps> {
         <div class="auth__buttons">
             <button type="submit" class="auth__confirm">{{confirmButton}}</button>
             <div class="auth__change">{{{ Link href=swap class="auth__link" text=changeButton }}}</div>
-            <div class="auth__error auth__error_centered">{{this.loginError}}</div>
+            <div class="auth__error auth__error_centered">{{loginError}}</div>
         </div>
     </form>
 </div>
