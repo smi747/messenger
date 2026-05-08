@@ -1,4 +1,5 @@
 import AuthAPI from "../api/auth";
+import Store from "../framework/Store";
 import Router from "../router";
 
 const loginAPI = new AuthAPI();
@@ -7,14 +8,17 @@ export default class LoginController {
     async login(data) {
     try {
 
-      console.log(12345);
+      const result = await loginAPI.signin(data);
+      if (result == "OK") {
+        Router.go('/messenger');
+      }
 
-      //const userID = loginAPI.request(prepareDataToRequest(data));
+      //.then(data => Store.set('user', data));
 
-      Router.go('/messenger');
+      //Router.go('/messenger');
 
     } catch (error) {
-      // Логика обработки ошибок
+      Store.setState('loginError', "Ошибка входа: проверьте логин или пароль");
     }
   }
 }

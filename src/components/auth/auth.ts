@@ -3,6 +3,7 @@ import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
 import { validateField } from "../../utils/validate";
 import LoginController from "../../controllers/loginController.js";
+import Store from "../../framework/Store";
 
 type FieldName =
     | "first_name"
@@ -30,11 +31,21 @@ interface AuthProps extends BlockOwnProps {
     fields: Field[];
     errors: Errors;
     type: string;
+    loginError: string;
 }
 
 export default class Auth extends Block<AuthProps> {
     static componentName = "Auth";
     private logincontroller = new LoginController();
+
+    constructor(props: AuthProps) {
+        super(props);
+        Store.subscribe(() => {
+        // вызываем обновление компонента, передав данные из хранилища
+            this.setProps({ ...Store.getState() });
+            console.log(Store.getState());
+        });
+    }
 
     protected events = {
 
@@ -64,12 +75,13 @@ export default class Auth extends Block<AuthProps> {
             });
             this.setProps({ fields: tmp });
 
-            //for (let [key, value] of formData.entries()) {
-            //    console.log(`${key}: ${value}`);
-            //}
+            const data: { [key: string]: any } = {};
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
             console.log(this.props.type);
             if (this.props.type == "LogIn") {
-                this.logincontroller.login();
+                this.logincontroller.login(data);
             }
             if (this.props.type == "SignUp") {
 
@@ -120,6 +132,7 @@ export default class Auth extends Block<AuthProps> {
         <div class="auth__buttons">
             <button type="submit" class="auth__confirm">{{confirmButton}}</button>
             <div class="auth__change">{{{ Link href=swap class="auth__link" text=changeButton }}}</div>
+            <div class="auth__error auth__error_centered">{{this.loginError}}</div>
         </div>
     </form>
 </div>
