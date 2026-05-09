@@ -15,4 +15,7 @@ export default class LoginController {
         Router.go('/500');
     }
   }
+  profileState(n) {
+    Store.setState("profileState", n);
+  }
 }

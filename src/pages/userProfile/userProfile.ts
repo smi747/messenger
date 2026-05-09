@@ -3,7 +3,7 @@ import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
 import { validateField } from "../../utils/validate";
 import LoginController from "../../controllers/loginController.js";
-//mport ProfileController from "../../controllers/profileController.js";
+import ProfileController from "../../controllers/profileController.js";
 import Store from "../../framework/Store";
 import isEqual from "../../utils/isEqual";
 
@@ -110,12 +110,13 @@ const default_props: UserProfileProps = {
 export default class UserProfile extends Block<UserProfileProps> {
     static componentName = "SignUp";
     private logincontroller = new LoginController();
-    //private profileController = new ProfileController();
+    private profilecontroller = new ProfileController();
 
     constructor(props: UserProfileProps = default_props as UserProfileProps) {
         super(props);
-        this.logincontroller.getUser();
         Store.setState("userInfo", this.props.userInfo);
+        Store.setState("profileState", this.props.state);
+        this.logincontroller.getUser();
         let state = this.mapStateToProps(Store.getState());
         Store.subscribe(() => {
           // при обновлении получаем новое состояние
@@ -141,11 +142,12 @@ export default class UserProfile extends Block<UserProfileProps> {
             }
             return res;
         });
-        console.log(new_fields);
+        console.log(state.profileState);
         return {
             userInfo: structuredClone(state.userInfo),
             fields: new_fields,
             avatarLink: "https://ya-praktikum.tech/api/v2/resources/"+state.userInfo.avatar,
+            state: structuredClone(state.profileState),
         };
 };
 
@@ -154,30 +156,56 @@ export default class UserProfile extends Block<UserProfileProps> {
             if (event.target == this.refs.logout) {
                 this.logincontroller.logout();
             }
+            if (event.target == this.refs.setDataEdit) {
+                this.profilecontroller.profileState({
+                    noEdit: false,
+                    passwordEdit: false,
+                    dataEdit: true,
+                });
+            }
+            if (event.target == this.refs.setPasswordEdit) {
+                this.profilecontroller.profileState({
+                    noEdit: false,
+                    passwordEdit: true,
+                    dataEdit: false,
+                });
+            }
+            if (event.target == this.refs.setNoEdit || event.target == this.refs.setNoEdit_) {
+                this.profilecontroller.profileState({
+                    noEdit: true,
+                    passwordEdit: false,
+                    dataEdit: false,
+                });
+            }
         },
         focusout: (event: Event) => {
             event.stopPropagation();
-            let error = validateField(
-                (event.target as HTMLInputElement).name,
-                (event.target as HTMLInputElement).value,
-            );
-            let tmp = [...this.props.fields];
-            if (error) {
-                tmp.forEach((obj) => {
-                    if (obj.name == (event.target as HTMLInputElement).name) {
-                        obj.content = (event.target as HTMLInputElement).value;
-                        obj.errortext = error;
-                    }
-                });
-            } else {
-                tmp.forEach((obj) => {
-                    if (obj.name == (event.target as HTMLInputElement).name) {
-                        obj.content = (event.target as HTMLInputElement).value;
-                        obj.errortext = "";
-                    }
-                });
+            if (this.props.state.dataEdit) {
+                let error = validateField(
+                    (event.target as HTMLInputElement).name,
+                    (event.target as HTMLInputElement).value,
+                );
+                let tmp = [...this.props.fields];
+                if (error) {
+                    tmp.forEach((obj) => {
+                        if (obj.name == (event.target as HTMLInputElement).name) {
+                            obj.content = (event.target as HTMLInputElement).value;
+                            obj.errortext = error;
+                        }
+                    });
+                } else {
+                    tmp.forEach((obj) => {
+                        if (obj.name == (event.target as HTMLInputElement).name) {
+                            obj.content = (event.target as HTMLInputElement).value;
+                            obj.errortext = "";
+                        }
+                    });
+                }
+                this.setProps({ fields: tmp });
             }
-            this.setProps({ fields: tmp });
+            else if (this.props.state.passwordEdit) {
+                //this.setProps();
+            }
         },
 
         submit: (event: Event) => {
@@ -210,48 +238,6 @@ export default class UserProfile extends Block<UserProfileProps> {
             }
         },
     };
-
-    protected componentDidMount(): void {
-
-        Object.entries(this.refs).forEach(([name, link]) => {
-            if (name == "setPasswordEdit") {
-                link.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    this.setProps({
-                        state: {
-                            noEdit: false,
-                            passwordEdit: true,
-                            dataEdit: false,
-                        },
-                    });
-                });
-            }
-            if (name == "setDataEdit") {
-                link.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    this.setProps({
-                        state: {
-                            noEdit: false,
-                            passwordEdit: false,
-                            dataEdit: true,
-                        },
-                    });
-                });
-            }
-            if (name == "setNoEdit" || name == "setNoEdit_") {
-                link.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    this.setProps({
-                        state: {
-                            noEdit: true,
-                            passwordEdit: false,
-                            dataEdit: false,
-                        },
-                    });
-                });
-            }
-        });
-    }
 
     protected template = `
     {{#if state.noEdit}}
