@@ -43,7 +43,6 @@ export default class Auth extends Block<AuthProps> {
         Store.subscribe(() => {
         // вызываем обновление компонента, передав данные из хранилища
             this.setProps({ ...Store.getState() });
-            console.log(Store.getState());
         });
     }
 

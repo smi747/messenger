@@ -3,6 +3,13 @@ import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
 import { validateField } from "../../utils/validate";
 import LoginController from "../../controllers/loginController.js";
+//mport ProfileController from "../../controllers/profileController.js";
+import Store from "../../framework/Store";
+import isEqual from "../../utils/isEqual";
+
+type Indexed<T = any> = {
+    [key in string]: T;
+};
 
 type FieldName =
     | "first_name"
@@ -31,7 +38,9 @@ interface UserProfileProps extends BlockOwnProps {
     appElement: HTMLElement | null;
     state: State;
     name: string;
+    avatarLink: string;
     fields: Field[];
+    userInfo: Indexed<any>;
 }
 
 const userProfileData = [
@@ -78,21 +87,67 @@ const userProfileData = [
         content: "8 800 000 00 00",
     },
 ];
+const userInfoData = {
+  "id": 0,
+  "first_name": "",
+  "second_name": "",
+  "display_name": "",
+  "phone": "",
+  "login": "",
+  "avatar": "",
+  "email": ""
+}
 
-const default_props = {
+const default_props: UserProfileProps = {
             appElement: document.getElementById("app"),
             state: { noEdit: true, passwordEdit: false, dataEdit: false },
             name: "Иван",
             fields: userProfileData,
+            userInfo: userInfoData,
+            avatarLink: "",
         };
 
 export default class UserProfile extends Block<UserProfileProps> {
     static componentName = "SignUp";
-        private logincontroller = new LoginController();
+    private logincontroller = new LoginController();
+    //private profileController = new ProfileController();
 
     constructor(props: UserProfileProps = default_props as UserProfileProps) {
         super(props);
+        this.logincontroller.getUser();
+        Store.setState("userInfo", this.props.userInfo);
+        let state = this.mapStateToProps(Store.getState());
+        Store.subscribe(() => {
+          // при обновлении получаем новое состояние
+          const newState = this.mapStateToProps(Store.getState());
+
+          // если что-то из используемых данных поменялось, обновляем компонент
+          if (!isEqual(state, newState)) {
+            this.setProps({ ...newState as Indexed<any>});
+          }
+
+          // не забываем сохранить новое состояние
+          state = newState;
+        });
     }
+
+    private mapStateToProps = (state: Indexed<any>) => {
+        const new_fields = this.props.fields.map(field => {
+            let res = structuredClone(field);
+            for (const [key, value] of Object.entries(state.userInfo)) {
+                if (field.name == key) {
+                    res.content = value as string;
+                }
+            }
+            return res;
+        });
+        console.log(new_fields);
+        return {
+            userInfo: structuredClone(state.userInfo),
+            fields: new_fields,
+            avatarLink: "https://ya-praktikum.tech/api/v2/resources/"+state.userInfo.avatar,
+        };
+};
 
     protected events = {
         click: (event: Event) => {
@@ -157,6 +212,7 @@ export default class UserProfile extends Block<UserProfileProps> {
     };
 
     protected componentDidMount(): void {
+
         Object.entries(this.refs).forEach(([name, link]) => {
             if (name == "setPasswordEdit") {
                 link.addEventListener("click", (e) => {
@@ -202,8 +258,8 @@ export default class UserProfile extends Block<UserProfileProps> {
 <div class="profile">
     <div class="profile__content">
         <div class="profile__person">
-            <div class="profile__avatar profile__avatar_editable"></div>
-            <div class="profile__name">{{name}}</div>
+            <div class="profile__avatar"><img class="profile__avatarimg" src={{avatarLink}}></div>
+            <div class="profile__name">{{userInfo.first_name}}</div>
         </div>
         <div class="profile__data">
             {{#each fields}}
@@ -225,8 +281,8 @@ export default class UserProfile extends Block<UserProfileProps> {
 <div class="profile">
     <div class="profile__content">
         <div class="profile__person">
-            <div class="profile__avatar"></div>
-            <div class="profile__name">{{name}}</div>
+            <div class="profile__avatar"><img class="profile__avatarimg" src={{avatarLink}}></div>
+            <div class="profile__name">{{userInfo.first_name}}</div>
         </div>
         <form class="profile__data-wrap" ref="form">
             <div class="profile__data">
@@ -255,8 +311,8 @@ export default class UserProfile extends Block<UserProfileProps> {
 <div class="profile">
     <div class="profile__content">
         <div class="profile__person">
-            <div class="profile__avatar"></div>
-            <div class="profile__name">{{name}}</div>
+            <div class="profile__avatar profile__avatar_editable"><img class="profile__avatarimg" src={{avatarLink}}></div>
+            <div class="profile__name">{{userInfo.first_name}}</div>
         </div>
         <form class="profile__data-wrap" ref="form">
             <div class="profile__data">

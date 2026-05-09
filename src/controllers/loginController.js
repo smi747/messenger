@@ -10,6 +10,7 @@ export default class LoginController {
       const result = await loginAPI.signin(data);
       if (result == "OK") {
         Router.go('/messenger');
+        Store.setState('userInfo', result);
       }
     } catch (error) {
       Store.setState('loginError', JSON.parse(error.response).reason);
@@ -31,10 +32,22 @@ export default class LoginController {
         try {
         const result = await loginAPI.signup(data);
         if (result.id) {
+            Store.setState('userInfo', result);
             Router.go('/messenger');
         }
         } catch (error) {
-        Store.setState('loginError', JSON.parse(error.response).reason);
+            Store.setState('loginError', JSON.parse(error.response).reason);
+        }
+    }
+
+        async getUser() {
+        try {
+        const result = await loginAPI.getUser();
+        if (result.id) {
+            Store.setState('userInfo', result);
+        }
+        } catch (error) {
+            Store.setState('loginError', JSON.parse(error.response).reason);
         }
     }
 }
