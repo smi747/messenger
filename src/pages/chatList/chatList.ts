@@ -27,7 +27,7 @@ export default class ChatList extends Block<ChatListProps> {
     <div class="chatlist__catalog catalog">
         <div class="catalog__functions">
             <button class="catalog__button">Новый чат</button>
-            <button class="catalog__button">Профиль</button>
+            {{{ Link class="catalog__button" href="/settings" text="Профиль"}}}
         </div>
         <div class="catalog__search">
             <input class="catalog__input" placeholder="Поиск">
@@ -61,8 +61,6 @@ export default class ChatList extends Block<ChatListProps> {
             <button type="submit" class="catalog__send">→</button>
         </form>
     </div>
-
-{{{ Header }}}
 </div>
   `;
 }

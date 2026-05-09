@@ -10,10 +10,10 @@ export default class AuthAPI extends BaseAPI {
     signin(data) {
         return chatAPIInstance.post('/signin', {data: data});
     }
-    getUser(data) {
+    getUser() {
         return chatAPIInstance.get('/user');
     }
-    logout(data) {
+    logout() {
         return chatAPIInstance.post('/logout');
     }
 }

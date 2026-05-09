@@ -2,6 +2,7 @@ import Block from "../../framework/Block";
 import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
 import { validateField } from "../../utils/validate";
+import LoginController from "../../controllers/loginController.js";
 
 type FieldName =
     | "first_name"
@@ -87,12 +88,18 @@ const default_props = {
 
 export default class UserProfile extends Block<UserProfileProps> {
     static componentName = "SignUp";
+        private logincontroller = new LoginController();
 
     constructor(props: UserProfileProps = default_props as UserProfileProps) {
         super(props);
     }
 
     protected events = {
+        click: (event: Event) => {
+            if (event.target == this.refs.logout) {
+                this.logincontroller.logout();
+            }
+        },
         focusout: (event: Event) => {
             event.stopPropagation();
             let error = validateField(
@@ -209,10 +216,9 @@ export default class UserProfile extends Block<UserProfileProps> {
         <div class="profile__data">
             <div class="profile__line">{{{ Link href="#" class="profile__link setDataEdit" ref="setDataEdit" text="Изменить данные" }}}</div>
             <div class="profile__line">{{{ Link href="#" class="profile__link setPasswordEdit" ref="setPasswordEdit" text="Изменить пароль" }}}</div>
-            <div class="profile__line">{{{ Link href="#" class="profile__link profile__link_red" text="Выйти" }}}</div>
+            <div class="profile__line">{{{ Link href="#" class="profile__link profile__link_red" text="Выйти" ref="logout"}}}</div>
         </div>
     </div>
-{{{ Header }}}
 </div>
 {{/if}}
 {{#if state.passwordEdit}}
@@ -243,7 +249,6 @@ export default class UserProfile extends Block<UserProfileProps> {
             </div>
         </form>
     </div>
-{{{ Header }}}
 </div>
 {{/if}}
 {{#if state.dataEdit}}
@@ -269,7 +274,6 @@ export default class UserProfile extends Block<UserProfileProps> {
             </div>
         </form>
     </div>
-{{{ Header }}}
 </div>
 {{/if}}
   `;

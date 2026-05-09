@@ -84,6 +84,7 @@ constructor(root) {
         method,
         isGet && data ? `${this.root_api+url}${queryStringify(data)}` : this.root_api+url,
       );
+      xhr.withCredentials = true;
 
       if (responseType) {
         xhr.responseType = responseType;

@@ -1,3 +1,5 @@
+import { isLoggedIn } from "./services/isLoggedIn.js";
+
 function isEqual(lhs, rhs) {
   return lhs === rhs;
 }
@@ -84,12 +86,23 @@ class Router {
         this.go("/404");
         return;
     }
+    isLoggedIn().then(result => {
+        if (result && (pathname == "/" || pathname == "/sign-up")) {
+            this.go("/messenger");
+            return;
+        }
+        else if (!result && !(pathname == "/" || pathname == "/sign-up")) {
+            this.go("/");
+            return;
+        }
+        else {
+            route.render(route, pathname);
+        }
+    });
 
     //if (this._currentRoute) {
     //  this._currentRoute.leave();
     //}
-
-    route.render(route, pathname);
   }
 
   go(pathname) {

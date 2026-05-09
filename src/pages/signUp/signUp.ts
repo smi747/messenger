@@ -81,7 +81,6 @@ export default class SignUp extends Block<SignUpProps> {
     protected template = `
     <div class="loginform">
     {{{ Auth title="Регистрация" fields=fields confirmButton="Зарегистрироваться" changeButton="Войти" swap="/" type="SignUp"}}}
-{{{ Header }}}
  </div>
   `;
 }

@@ -2,7 +2,7 @@ import Block from "../../framework/Block";
 import { BlockOwnProps } from "../../framework/Block";
 import validateForm from "../../utils/validate";
 import { validateField } from "../../utils/validate";
-import LoginController from "../../controllers/auth.js";
+import LoginController from "../../controllers/loginController.js";
 import Store from "../../framework/Store";
 
 type FieldName =
@@ -79,7 +79,6 @@ export default class Auth extends Block<AuthProps> {
             for (let [key, value] of formData.entries()) {
                 data[key] = value;
             }
-            console.log(this.props.type);
             if (this.props.type == "LogIn") {
                 this.logincontroller.login(data);
             }
