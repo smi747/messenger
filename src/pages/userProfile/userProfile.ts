@@ -257,6 +257,7 @@ export default class UserProfile extends Block<UserProfileProps> {
                 else {
                     this.profilecontroller.setAvatar(formData);
                     this.setProps({ loginError: ""});
+                    this.setProps({ activeModal: false});
                 }
             }
 
