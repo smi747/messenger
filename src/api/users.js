@@ -1,7 +1,7 @@
 import HTTPTransport from "../framework/HTTPTransport";
 import { BaseAPI } from "../framework/BaseAPI";
 
-const chatAPIInstance = new HTTPTransport('https://ya-praktikum.tech/api/v2/users');
+const chatAPIInstance = new HTTPTransport('https://ya-praktikum.tech/api/v2/user');
 
 export default class AuthAPI extends BaseAPI {
     setProfile(data) {

@@ -87,7 +87,6 @@ export default abstract class Block<
             }
         }
     }
-
     protected render() {
         this.unmountComponent();
         const fragment = this.compile();

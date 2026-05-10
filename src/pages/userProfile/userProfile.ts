@@ -41,6 +41,9 @@ interface UserProfileProps extends BlockOwnProps {
     avatarLink: string;
     fields: Field[];
     userInfo: Indexed<any>;
+    formError: string;
+    activeModal: boolean;
+    loginError: string;
 }
 
 const userProfileData = [
@@ -87,6 +90,31 @@ const userProfileData = [
         content: "8 800 000 00 00",
     },
 ];
+
+const passwordData = [
+    {
+        label: "Старый пароль",
+        inputType: "password",
+        name: "oldPassword",
+        errortext: "",
+        content: "",
+    },
+    {
+        label: "Новый пароль",
+        inputType: "password",
+        name: "newPassword",
+        errortext: "",
+        content: "",
+    },
+    {
+        label: "Повторите пароль",
+        inputType: "password",
+        name: "newPassword_",
+        errortext: "",
+        content: "",
+    },
+]
+
 const userInfoData = {
   "id": 0,
   "first_name": "",
@@ -105,6 +133,9 @@ const default_props: UserProfileProps = {
             fields: userProfileData,
             userInfo: userInfoData,
             avatarLink: "",
+            formError: "",
+            activeModal: false,
+            loginError: "",
         };
 
 export default class UserProfile extends Block<UserProfileProps> {
@@ -142,17 +173,24 @@ export default class UserProfile extends Block<UserProfileProps> {
             }
             return res;
         });
-        console.log(state.profileState);
         return {
             userInfo: structuredClone(state.userInfo),
             fields: new_fields,
             avatarLink: "https://ya-praktikum.tech/api/v2/resources/"+state.userInfo.avatar,
             state: structuredClone(state.profileState),
+            formError: state.formError,
+
         };
 };
 
     protected events = {
         click: (event: Event) => {
+            if (event.target == this.refs.background) {
+                this.setProps({ activeModal: false });
+            }
+            if (event.target == this.refs.changeavatar) {
+                this.setProps({ activeModal: true });
+            }
             if (event.target == this.refs.logout) {
                 this.logincontroller.logout();
             }
@@ -164,6 +202,7 @@ export default class UserProfile extends Block<UserProfileProps> {
                 });
             }
             if (event.target == this.refs.setPasswordEdit) {
+                this.props.fields = passwordData;
                 this.profilecontroller.profileState({
                     noEdit: false,
                     passwordEdit: true,
@@ -171,6 +210,7 @@ export default class UserProfile extends Block<UserProfileProps> {
                 });
             }
             if (event.target == this.refs.setNoEdit || event.target == this.refs.setNoEdit_) {
+                this.props.fields = userProfileData;
                 this.profilecontroller.profileState({
                     noEdit: true,
                     passwordEdit: false,
@@ -180,12 +220,12 @@ export default class UserProfile extends Block<UserProfileProps> {
         },
         focusout: (event: Event) => {
             event.stopPropagation();
-            if (this.props.state.dataEdit) {
+            if (this.props.state.dataEdit && !this.props.activeModal) {
                 let error = validateField(
                     (event.target as HTMLInputElement).name,
                     (event.target as HTMLInputElement).value,
                 );
-                let tmp = [...this.props.fields];
+                let tmp = structuredClone(this.props.fields);
                 if (error) {
                     tmp.forEach((obj) => {
                         if (obj.name == (event.target as HTMLInputElement).name) {
@@ -203,38 +243,66 @@ export default class UserProfile extends Block<UserProfileProps> {
                 }
                 this.setProps({ fields: tmp });
             }
-            else if (this.props.state.passwordEdit) {
-                //this.setProps();
-            }
         },
 
         submit: (event: Event) => {
             event.preventDefault();
+            if (this.props.state.dataEdit && this.props.activeModal) {
+                const formData = new FormData(this.refs.formavatar as HTMLFormElement);
 
-            const formData = new FormData(this.refs.form as HTMLFormElement);
-            const validationErrors = validateForm(formData);
-            if (Object.keys(validationErrors).length > 0) {
+                const avatar = formData.get("avatar");
+                if (!(avatar as File)["size"]) {
+                    this.setProps({ loginError: "Пустой файл"});
+                }
+                else {
+                    this.profilecontroller.setAvatar(formData);
+                    this.setProps({ loginError: ""});
+                }
+            }
+
+            if (this.props.state.dataEdit && !this.props.activeModal) {
+                const formData = new FormData(this.refs.form as HTMLFormElement);
+                const validationErrors = validateForm(formData);
+                if (Object.keys(validationErrors).length > 0) {
+                    let tmp = [...this.props.fields];
+                    tmp.forEach((obj) => {
+                        if (validationErrors[obj.name as FieldName]) {
+                            obj.errortext = validationErrors[
+                                obj.name as FieldName
+                            ] as string;
+                        } else {
+                            obj.errortext = "";
+                        }
+                    });
+                    this.setProps({ fields: tmp });
+                    return;
+                }
                 let tmp = [...this.props.fields];
-                tmp.forEach((obj) => {
-                    if (validationErrors[obj.name as FieldName]) {
-                        obj.errortext = validationErrors[
-                            obj.name as FieldName
-                        ] as string;
-                    } else {
-                        obj.errortext = "";
-                    }
+                tmp.forEach((obj: Field) => {
+                    obj.errortext = "";
                 });
                 this.setProps({ fields: tmp });
-                return;
-            }
-            let tmp = [...this.props.fields];
-            tmp.forEach((obj: Field) => {
-                obj.errortext = "";
-            });
-            this.setProps({ fields: tmp });
 
-            for (let [key, value] of formData.entries()) {
-                console.log(`${key}: ${value}`);
+                const data: { [key: string]: any } = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+
+                this.profilecontroller.setProfile(data);
+                this.profilecontroller.profileState({
+                        noEdit: true,
+                        passwordEdit: false,
+                        dataEdit: false,
+                    });
+            }
+            if (this.props.state.passwordEdit) {
+                const formData = new FormData(this.refs.form as HTMLFormElement);
+                const data: { [key: string]: any } = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+
+                this.profilecontroller.setPassword(data);
             }
         },
     };
@@ -256,9 +324,9 @@ export default class UserProfile extends Block<UserProfileProps> {
             {{/each}}
         </div>
         <div class="profile__data">
-            <div class="profile__line">{{{ Link href="#" class="profile__link setDataEdit" ref="setDataEdit" text="Изменить данные" }}}</div>
-            <div class="profile__line">{{{ Link href="#" class="profile__link setPasswordEdit" ref="setPasswordEdit" text="Изменить пароль" }}}</div>
-            <div class="profile__line">{{{ Link href="#" class="profile__link profile__link_red" text="Выйти" ref="logout"}}}</div>
+            <div class="profile__line"><button class="profile__link setDataEdit" ref="setDataEdit">Изменить данные</button></div>
+            <div class="profile__line"><button class="profile__link setPasswordEdit" ref="setPasswordEdit">Изменить пароль</button></div>
+            <div class="profile__line"><button class="profile__link profile__link_red" ref="logout">Выйти</button></div>
         </div>
     </div>
 </div>
@@ -272,22 +340,18 @@ export default class UserProfile extends Block<UserProfileProps> {
         </div>
         <form class="profile__data-wrap" ref="form">
             <div class="profile__data">
+                {{#each fields}}
                 <div class="profile__line">
-                    <div class="profile__fieldname">Старый пароль</div>
-                    <input class="profile__fieldvalue" type="password" id="old_password" name="old_password" ref="old_password">
+                    <div class="profile__fieldname">{{this.label}}</div>
+                    <input class="profile__fieldvalue" type="{{this.inputType}}" id="{{this.name}}" name="{{this.name}}" ref="{{this.name}}" value="{{this.content}}">
                 </div>
-                <div class="profile__line">
-                    <div class="profile__fieldname">Новый пароль</div>
-                    <input class="profile__fieldvalue" type="password" id="new_password" name="new_password" ref="new_password">
-                </div>
-                <div class="profile__line">
-                    <div class="profile__fieldname">Повторите пароль</div>
-                    <input class="profile__fieldvalue" type="password" id="new_password_" name="new_password_" ref="new_password_">
-                </div>
+                {{#if this.errortext}}<div class="profile__error">{{this.errortext}}</div>{{/if}}
+                {{/each}}
             </div>
             <div class="profile__data">
+                <div class="profile__error profile__error_centered">{{formError}}</div>
                 <div class="profile__line"><button class="profile__link" type="submit">Сохранить</button></div>
-                <div class="profile__line">{{{ Link href="#" class="profile__link profile__link_red setNoEdit" ref="setNoEdit" text="Отмена" }}}</div>
+                <div class="profile__line"><button class="profile__link profile__link_red setNoEdit" ref="setNoEdit">Отмена</button></div>
             </div>
         </form>
     </div>
@@ -297,7 +361,7 @@ export default class UserProfile extends Block<UserProfileProps> {
 <div class="profile">
     <div class="profile__content">
         <div class="profile__person">
-            <div class="profile__avatar profile__avatar_editable"><img class="profile__avatarimg" src={{avatarLink}}></div>
+            <div class="profile__avatar profile__avatar_editable" ref="changeavatar"><img class="profile__avatarimg" src={{avatarLink}}></div>
             <div class="profile__name">{{userInfo.first_name}}</div>
         </div>
         <form class="profile__data-wrap" ref="form">
@@ -312,10 +376,24 @@ export default class UserProfile extends Block<UserProfileProps> {
             </div>
             <div class="profile__data">
                 <div class="profile__line"><button class="profile__link" type="submit">Сохранить</button></div>
-                <div class="profile__line">{{{ Link href="#" class="profile__link profile__link_red setNoEdit" ref="setNoEdit_" text="Отмена" }}}</div>
+                <div class="profile__line"><button class="profile__link profile__link_red setNoEdit" ref="setNoEdit_">Отмена</button></div>
             </div>
         </form>
     </div>
+    {{#if activeModal}}
+    <div class="profile__background" ref="background">
+        <div class="avatar">
+    <div class="avatar__title">Загрузите файл</div>
+    <form class="avatar__form" ref="formavatar">
+        <input type="file" id="imageLoader" name="avatar" accept="image/*" class="avatar__input">
+        <div class="avatar__buttons">
+            <button type="submit" class="avatar__confirm">Поменять</button>
+            <div class="avatar__error avatar__error_centered">{{loginError}}</div>
+        </div>
+    </form>
+    </div>
+    </div>
+    {{/if}}
 </div>
 {{/if}}
   `;
