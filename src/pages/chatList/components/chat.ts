@@ -1,7 +1,6 @@
 import Block from "../../../framework/Block";
 import { BlockOwnProps } from "../../../framework/Block";
 import Store from "../../../framework/Store";
-import isEqual from "../../../utils/isEqual";
 
 type Indexed<T = any> = {
     [key in string]: T;
@@ -28,7 +27,7 @@ export default class Chat extends Block<ChatProps> {
           const newState = this.mapStateToProps(Store.getState());
 
           // если что-то из используемых данных поменялось, обновляем компонент
-          if (!isEqual(state, newState)) {
+          if (!(state == newState)) {
             this.setProps({ ...newState as Indexed<any>});
           }
 
