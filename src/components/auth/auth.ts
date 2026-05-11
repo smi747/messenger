@@ -16,6 +16,20 @@ type FieldName =
 
 type Errors = Partial<Record<FieldName, string>>;
 
+type SignupData = {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+}
+
+type SigninData = {
+  login: string;
+  password: string;
+}
+
 type Field = {
     label: string;
     inputType: string;
@@ -79,10 +93,10 @@ export default class Auth extends Block<AuthProps> {
                 data[key] = value;
             }
             if (this.props.type == "LogIn") {
-                this.logincontroller.login(data);
+                this.logincontroller.login(data as SigninData);
             }
             if (this.props.type == "SignUp") {
-                this.logincontroller.signup(data);
+                this.logincontroller.signup(data as SignupData);
             }
         },
 

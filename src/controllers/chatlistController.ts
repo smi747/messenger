@@ -27,7 +27,7 @@ const chatlistAPI = new ChatsAPI();
 export default class ChatlistController {
   async getChats(data?: GetChatsRequest): Promise<void> {
     try {
-      const result: Chat[] = await chatlistAPI.getChats(data);
+      const result: Chat[] = await chatlistAPI.getChats(data) as Chat[];
       if (result) {
         Store.setState("chatList", result);
       }
@@ -38,7 +38,7 @@ export default class ChatlistController {
 
   async addChat(data: AddChatRequest): Promise<void> {
     try {
-      const result: Chat = await chatlistAPI.addChat(data);
+      const result: Chat = await chatlistAPI.addChat(data) as Chat;
       if (result?.id) {
         Store.setState("current", null);
         await this.getChats();
@@ -50,7 +50,7 @@ export default class ChatlistController {
 
   async addUser(data: UserRequest): Promise<void> {
     try {
-      const result: string = await chatlistAPI.addUser(data);
+      const result: string = await chatlistAPI.addUser(data) as string;
       if (result === "OK") {
       }
     } catch (error) {
@@ -60,7 +60,7 @@ export default class ChatlistController {
 
   async deleteUser(data: UserRequest): Promise<void> {
     try {
-      const result: string = await chatlistAPI.deleteUser(data);
+      const result: string = await chatlistAPI.deleteUser(data) as string;
       if (result === "OK") {
       }
     } catch (error) {

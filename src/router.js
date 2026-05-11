@@ -97,10 +97,6 @@ class Router {
             route.render(route, pathname);
         }
     });
-
-    //if (this._currentRoute) {
-    //  this._currentRoute.leave();
-    //}
   }
 
   go(pathname) {

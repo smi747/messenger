@@ -34,6 +34,13 @@ type Field = {
     content: string;
 };
 
+type PasswordData = {
+    oldPassword: string;
+    newPassword: string;
+    newPassword_: string;
+}
+
+
 interface UserProfileProps extends BlockOwnProps {
     appElement: HTMLElement | null;
     state: State;
@@ -298,12 +305,12 @@ export default class UserProfile extends Block<UserProfileProps> {
             }
             if (this.props.state.passwordEdit) {
                 const formData = new FormData(this.refs.form as HTMLFormElement);
-                const data: { [key: string]: any } = {};
+                const data: { [key: string]: string } = {};
                 for (let [key, value] of formData.entries()) {
-                    data[key] = value;
+                    data[key] = value as string;
                 }
 
-                this.profilecontroller.setPassword(data);
+                this.profilecontroller.setPassword(data as PasswordData);
             }
         },
     };

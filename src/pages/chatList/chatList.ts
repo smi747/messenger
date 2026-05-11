@@ -1,6 +1,6 @@
 import Block from "../../framework/Block";
 import { BlockOwnProps } from "../../framework/Block";
-import ChatlistController from "../../controllers/chatlistController.js";
+import ChatlistController from "../../controllers/chatlistController";
 import Store from "../../framework/Store";
 import isEqual from "../../utils/isEqual";
 
@@ -22,13 +22,6 @@ type Message = {
     content: string;
     time: string;
 };
-
-// type ChatOld = {
-//     name: string;
-//     content: string;
-//     time: string;
-//     indicator: string;
-// };
 
 type Chat = {
     id: number;
