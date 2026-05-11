@@ -4,7 +4,7 @@ import Router from "../router";
 
 const profileAPI = new UsersAPI();
 
-export default class LoginController {
+export default class ProfileController {
     async setProfile(data) {
         try {
         const result = await profileAPI.setProfile(data);
@@ -41,7 +41,7 @@ export default class LoginController {
         }
         }
         catch (error) {
-
+            Store.setState('formError', JSON.parse(error.response).reason);
         }
     }
 

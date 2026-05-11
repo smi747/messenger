@@ -328,6 +328,7 @@ export default class UserProfile extends Block<UserProfileProps> {
             <div class="profile__line"><button class="profile__link setDataEdit" ref="setDataEdit">Изменить данные</button></div>
             <div class="profile__line"><button class="profile__link setPasswordEdit" ref="setPasswordEdit">Изменить пароль</button></div>
             <div class="profile__line"><button class="profile__link profile__link_red" ref="logout">Выйти</button></div>
+            <div class="profile__line">{{{ Link href="/messenger" class="profile__link" text="Вернуться"}}}</div>
         </div>
     </div>
 </div>

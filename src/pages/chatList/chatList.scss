@@ -48,6 +48,10 @@
     background-color: #e4edfd;
 }
 
+.catalog__active {
+    background-color: #e9e4fd;
+}
+
 .catalog__avatar {
     width: 47px;
     height: 47px;
@@ -121,6 +125,7 @@
     height: 52px;
     width: 100%;
     border-bottom: solid 1px #eaeaea;
+    flex-shrink: 0;
 }
 
 .chat__bottom {
