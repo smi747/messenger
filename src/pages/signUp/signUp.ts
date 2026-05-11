@@ -76,7 +76,7 @@ export default class SignUp extends Block<SignUpProps> {
 
     public submit() {
         console.log("signup");
-    };
+    }
 
     protected template = `
     <div class="loginform">

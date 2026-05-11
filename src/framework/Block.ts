@@ -9,7 +9,7 @@ export interface BlockOwnProps {
 }
 
 type EventListType = Partial<
-    Record<keyof HTMLElementEventMap, (e: Event ) => void>
+    Record<keyof HTMLElementEventMap, (e: Event) => void>
 >;
 
 export default abstract class Block<

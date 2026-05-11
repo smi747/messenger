@@ -38,8 +38,7 @@ type PasswordData = {
     oldPassword: string;
     newPassword: string;
     newPassword_: string;
-}
-
+};
 
 interface UserProfileProps extends BlockOwnProps {
     appElement: HTMLElement | null;
@@ -120,30 +119,30 @@ const passwordData = [
         errortext: "",
         content: "",
     },
-]
+];
 
 const userInfoData = {
-  "id": 0,
-  "first_name": "",
-  "second_name": "",
-  "display_name": "",
-  "phone": "",
-  "login": "",
-  "avatar": "",
-  "email": ""
-}
+    id: 0,
+    first_name: "",
+    second_name: "",
+    display_name: "",
+    phone: "",
+    login: "",
+    avatar: "",
+    email: "",
+};
 
 const default_props: UserProfileProps = {
-            appElement: document.getElementById("app"),
-            state: { noEdit: true, passwordEdit: false, dataEdit: false },
-            name: "Иван",
-            fields: userProfileData,
-            userInfo: userInfoData,
-            avatarLink: "",
-            formError: "",
-            activeModal: false,
-            loginError: "",
-        };
+    appElement: document.getElementById("app"),
+    state: { noEdit: true, passwordEdit: false, dataEdit: false },
+    name: "Иван",
+    fields: userProfileData,
+    userInfo: userInfoData,
+    avatarLink: "",
+    formError: "",
+    activeModal: false,
+    loginError: "",
+};
 
 export default class UserProfile extends Block<UserProfileProps> {
     static componentName = "SignUp";
@@ -157,21 +156,21 @@ export default class UserProfile extends Block<UserProfileProps> {
         this.logincontroller.getUser();
         let state = this.mapStateToProps(Store.getState());
         Store.subscribe(() => {
-          // при обновлении получаем новое состояние
-          const newState = this.mapStateToProps(Store.getState());
+            // при обновлении получаем новое состояние
+            const newState = this.mapStateToProps(Store.getState());
 
-          // если что-то из используемых данных поменялось, обновляем компонент
-          if (!isEqual(state, newState)) {
-            this.setProps({ ...newState as Indexed<any>});
-          }
+            // если что-то из используемых данных поменялось, обновляем компонент
+            if (!isEqual(state, newState)) {
+                this.setProps({ ...(newState as Indexed<any>) });
+            }
 
-          // не забываем сохранить новое состояние
-          state = newState;
+            // не забываем сохранить новое состояние
+            state = newState;
         });
     }
 
     private mapStateToProps = (state: Indexed<any>) => {
-        const new_fields = this.props.fields.map(field => {
+        const new_fields = this.props.fields.map((field) => {
             let res = structuredClone(field);
             for (const [key, value] of Object.entries(state.userInfo)) {
                 if (field.name == key) {
@@ -183,12 +182,13 @@ export default class UserProfile extends Block<UserProfileProps> {
         return {
             userInfo: structuredClone(state.userInfo),
             fields: new_fields,
-            avatarLink: "https://ya-praktikum.tech/api/v2/resources/"+state.userInfo.avatar,
+            avatarLink:
+                "https://ya-praktikum.tech/api/v2/resources/" +
+                state.userInfo.avatar,
             state: structuredClone(state.profileState),
             formError: state.formError,
-
         };
-};
+    };
 
     protected events = {
         click: (event: Event) => {
@@ -216,7 +216,10 @@ export default class UserProfile extends Block<UserProfileProps> {
                     dataEdit: false,
                 });
             }
-            if (event.target == this.refs.setNoEdit || event.target == this.refs.setNoEdit_) {
+            if (
+                event.target == this.refs.setNoEdit ||
+                event.target == this.refs.setNoEdit_
+            ) {
                 this.props.fields = userProfileData;
                 this.profilecontroller.profileState({
                     noEdit: true,
@@ -235,15 +238,23 @@ export default class UserProfile extends Block<UserProfileProps> {
                 let tmp = structuredClone(this.props.fields);
                 if (error) {
                     tmp.forEach((obj) => {
-                        if (obj.name == (event.target as HTMLInputElement).name) {
-                            obj.content = (event.target as HTMLInputElement).value;
+                        if (
+                            obj.name == (event.target as HTMLInputElement).name
+                        ) {
+                            obj.content = (
+                                event.target as HTMLInputElement
+                            ).value;
                             obj.errortext = error;
                         }
                     });
                 } else {
                     tmp.forEach((obj) => {
-                        if (obj.name == (event.target as HTMLInputElement).name) {
-                            obj.content = (event.target as HTMLInputElement).value;
+                        if (
+                            obj.name == (event.target as HTMLInputElement).name
+                        ) {
+                            obj.content = (
+                                event.target as HTMLInputElement
+                            ).value;
                             obj.errortext = "";
                         }
                     });
@@ -255,21 +266,24 @@ export default class UserProfile extends Block<UserProfileProps> {
         submit: (event: Event) => {
             event.preventDefault();
             if (this.props.state.dataEdit && this.props.activeModal) {
-                const formData = new FormData(this.refs.formavatar as HTMLFormElement);
+                const formData = new FormData(
+                    this.refs.formavatar as HTMLFormElement,
+                );
 
                 const avatar = formData.get("avatar");
                 if (!(avatar as File)["size"]) {
-                    this.setProps({ loginError: "Пустой файл"});
-                }
-                else {
+                    this.setProps({ loginError: "Пустой файл" });
+                } else {
                     this.profilecontroller.setAvatar(formData);
-                    this.setProps({ loginError: ""});
-                    this.setProps({ activeModal: false});
+                    this.setProps({ loginError: "" });
+                    this.setProps({ activeModal: false });
                 }
             }
 
             if (this.props.state.dataEdit && !this.props.activeModal) {
-                const formData = new FormData(this.refs.form as HTMLFormElement);
+                const formData = new FormData(
+                    this.refs.form as HTMLFormElement,
+                );
                 const validationErrors = validateForm(formData);
                 if (Object.keys(validationErrors).length > 0) {
                     let tmp = [...this.props.fields];
@@ -298,13 +312,15 @@ export default class UserProfile extends Block<UserProfileProps> {
 
                 this.profilecontroller.setProfile(data);
                 this.profilecontroller.profileState({
-                        noEdit: true,
-                        passwordEdit: false,
-                        dataEdit: false,
-                    });
+                    noEdit: true,
+                    passwordEdit: false,
+                    dataEdit: false,
+                });
             }
             if (this.props.state.passwordEdit) {
-                const formData = new FormData(this.refs.form as HTMLFormElement);
+                const formData = new FormData(
+                    this.refs.form as HTMLFormElement,
+                );
                 const data: { [key: string]: string } = {};
                 for (let [key, value] of formData.entries()) {
                     data[key] = value as string;

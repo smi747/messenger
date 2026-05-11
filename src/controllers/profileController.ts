@@ -4,66 +4,71 @@ import Router from "../router.js";
 
 type ProfileData = {
     [key: string]: any;
-}
+};
 
 type PasswordData = {
     oldPassword: string;
     newPassword: string;
     newPassword_: string;
-}
+};
 
 type ApiResult = {
     [key: string]: any;
-}
+};
 
 const profileAPI = new UsersAPI();
 
 export default class ProfileController {
     async setProfile(data: ProfileData): Promise<void> {
         try {
-            const result: ApiResult = await profileAPI.setProfile(data) as ApiResult;
+            const result: ApiResult = (await profileAPI.setProfile(
+                data,
+            )) as ApiResult;
 
             if (result.id) {
-                Store.setState('userInfo', result);
+                Store.setState("userInfo", result);
             }
-        } catch (error: any) {
-            Router.go('/500');
+        } catch {
+            Router.go("/500");
         }
     }
 
     async setPassword(data: PasswordData): Promise<void> {
         const { oldPassword, newPassword, newPassword_ } = data;
-        oldPassword;
-        if (newPassword !== newPassword_) {
-            Store.setState('formError', "Пароли не совпадают!");
+        if (oldPassword && (newPassword !== newPassword_)) {
+            Store.setState("formError", "Пароли не совпадают!");
             return;
         }
 
         try {
-            const result: string = await profileAPI.setPassword(data) as string;
+            const result: string = (await profileAPI.setPassword(
+                data,
+            )) as string;
 
             if (result === "OK") {
-                Store.setState('formError', "Пароль успешно изменен!");
+                Store.setState("formError", "Пароль успешно изменен!");
             }
         } catch (error: any) {
-            Store.setState('formError', JSON.parse(error.response).reason);
+            Store.setState("formError", JSON.parse(error.response).reason);
         }
     }
 
     async setAvatar(data: FormData): Promise<void> {
         try {
-            const result: ApiResult = await profileAPI.setAvatar(data) as ApiResult;
+            const result: ApiResult = (await profileAPI.setAvatar(
+                data,
+            )) as ApiResult;
 
             if (result.id) {
-                Store.setState('userInfo', result);
+                Store.setState("userInfo", result);
                 Store.setState("profileState", {
                     noEdit: true,
                     passwordEdit: false,
-                    dataEdit: false
+                    dataEdit: false,
                 });
             }
         } catch (error: any) {
-            Store.setState('formError', JSON.parse(error.response).reason);
+            Store.setState("formError", JSON.parse(error.response).reason);
         }
     }
 

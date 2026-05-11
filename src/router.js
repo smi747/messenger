@@ -1,112 +1,113 @@
 import { isLoggedIn } from "./services/isLoggedIn.js";
 
 function isEqual(lhs, rhs) {
-  return lhs === rhs;
+    return lhs === rhs;
 }
 
 function render(query, block) {
-  const root = document.getElementById(query);
-  root.innerHTML = "";
-  root.appendChild(block.element());
-  return root;
+    const root = document.getElementById(query);
+    root.innerHTML = "";
+    root.appendChild(block.element());
+    return root;
 }
 
 class Route {
-  constructor(pathname, view, props) {
-    this._pathname = pathname;
-    this._blockClass = view;
-    this._block = null;
-    this._props = props;
-  }
-
-  navigate(pathname) {
-    if (this.match(pathname)) {
-      this._pathname = pathname;
-      this.render();
-    }
-  }
-
-  leave() {
-    if (this._block) {
-      this._block.hide();
-    }
-  }
-
-  match(pathname) {
-    return isEqual(pathname, this._pathname);
-  }
-
-  render() {
-    if (!this._block) {
-      this._block = new this._blockClass();
+    constructor(pathname, view, props) {
+        this._pathname = pathname;
+        this._blockClass = view;
+        this._block = null;
+        this._props = props;
     }
 
+    navigate(pathname) {
+        if (this.match(pathname)) {
+            this._pathname = pathname;
+            this.render();
+        }
+    }
 
-    render(this._props.rootQuery, this._block);
-  }
+    leave() {
+        if (this._block) {
+            this._block.hide();
+        }
+    }
+
+    match(pathname) {
+        return isEqual(pathname, this._pathname);
+    }
+
+    render() {
+        if (!this._block) {
+            this._block = new this._blockClass();
+        }
+
+        render(this._props.rootQuery, this._block);
+    }
 }
 
-
 class Router {
-  constructor() {
-    if (Router.__instance) {
-      return Router.__instance;
+    constructor() {
+        if (Router.__instance) {
+            return Router.__instance;
+        }
+
+        this.routes = [];
+        this.history = window.history;
+        this._currentRoute = null;
+        this._rootQuery = "app";
+
+        Router.__instance = this;
     }
 
-    this.routes = [];
-    this.history = window.history;
-    this._currentRoute = null;
-    this._rootQuery = "app";
+    use(pathname, block) {
+        const route = new Route(pathname, block, {
+            rootQuery: this._rootQuery,
+        });
 
-    Router.__instance = this;
-  }
+        this.routes.push(route);
 
-  use(pathname, block) {
-      const route = new Route(pathname, block, {rootQuery: this._rootQuery});
-
-      this.routes.push(route);
-
-      return this;
-  }
-
-  start() {
-    // Реагируем на изменения в адресной строке и вызываем перерисовку
-    window.onpopstate = event => {
-      this._onRoute(event.currentTarget.location.pathname);
-    };
-
-    this._onRoute(window.location.pathname);
-  }
-
-  _onRoute(pathname) {
-    const route = this.getRoute(pathname);
-    if (!route) {
-        this.go("/404");
-        return;
+        return this;
     }
-    isLoggedIn().then(result => {
-        if (result && (pathname == "/" || pathname == "/sign-up")) {
-            this.go("/messenger");
+
+    start() {
+        // Реагируем на изменения в адресной строке и вызываем перерисовку
+        window.onpopstate = (event) => {
+            this._onRoute(event.currentTarget.location.pathname);
+        };
+
+        this._onRoute(window.location.pathname);
+    }
+
+    _onRoute(pathname) {
+        const route = this.getRoute(pathname);
+        if (!route) {
+            this.go("/404");
             return;
         }
-        else if (!result && !(pathname == "/" || pathname == "/sign-up")) {
-            this.go("/");
-            return;
-        }
-        else {
-            route.render(route, pathname);
-        }
-    });
-  }
+        isLoggedIn().then((result) => {
+            if (result && (pathname == "/" || pathname == "/sign-up")) {
+                this.go("/messenger");
+                return;
+            } else if (
+                !result &&
+                !(pathname == "/" || pathname == "/sign-up")
+            ) {
+                this.go("/");
+                return;
+            } else {
+                route.render(route, pathname);
+            }
+        });
+    }
 
-  go(pathname) {
-    this.history.pushState({}, "", pathname);
-    this._onRoute(pathname);
-  }
+    go(pathname) {
+        this.history.pushState({}, "", pathname);
+        this._onRoute(pathname);
+    }
 
-  getRoute(pathname) {
-    return this.routes.find(route => route.match(pathname));
-  }
+    getRoute(pathname) {
+        return this.routes.find((route) => route.match(pathname));
+    }
 }
 
 const router = new Router();

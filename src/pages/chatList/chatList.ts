@@ -9,12 +9,12 @@ type Indexed<T = any> = {
 };
 
 type AddChatRequest = {
-  title: string;
+    title: string;
 };
 
 type UserRequest = {
-  users: number[];
-  chatId: number;
+    users: number[];
+    chatId: number;
 };
 
 type Message = {
@@ -30,7 +30,7 @@ type Chat = {
     created_by: number;
     unread_count: number;
     last_message: string;
-}
+};
 
 interface ChatListProps extends BlockOwnProps {
     messages: Message[];
@@ -52,16 +52,16 @@ export default class ChatList extends Block<ChatListProps> {
 
         let state = this.mapStateToProps(Store.getState());
         Store.subscribe(() => {
-          // при обновлении получаем новое состояние
-          const newState = this.mapStateToProps(Store.getState());
+            // при обновлении получаем новое состояние
+            const newState = this.mapStateToProps(Store.getState());
 
-          // если что-то из используемых данных поменялось, обновляем компонент
-          if (!isEqual(state, newState)) {
-            this.setProps({ ...newState as Indexed<any>});
-          }
+            // если что-то из используемых данных поменялось, обновляем компонент
+            if (!isEqual(state, newState)) {
+                this.setProps({ ...(newState as Indexed<any>) });
+            }
 
-          // не забываем сохранить новое состояние
-          state = newState;
+            // не забываем сохранить новое состояние
+            state = newState;
         });
     }
 
@@ -75,7 +75,10 @@ export default class ChatList extends Block<ChatListProps> {
     protected events = {
         click: (event: Event) => {
             if (event.target == this.refs.background) {
-                this.setProps({ activeModal: false, activeModalSettings: false });
+                this.setProps({
+                    activeModal: false,
+                    activeModalSettings: false,
+                });
             }
             if (event.target == this.refs.newchat) {
                 this.setProps({ activeModal: true });
@@ -87,28 +90,36 @@ export default class ChatList extends Block<ChatListProps> {
         submit: (event: Event) => {
             event.preventDefault();
             if (this.props.activeModal) {
-                const formData = new FormData(this.refs.formnewchat as HTMLFormElement);
-                const data: AddChatRequest = {title: ""};
+                const formData = new FormData(
+                    this.refs.formnewchat as HTMLFormElement,
+                );
+                const data: AddChatRequest = { title: "" };
                 data.title = formData.get("title") as string;
                 this.chatlistcontroller.addChat(data as AddChatRequest);
-                    this.setProps({ activeModal: false});
+                this.setProps({ activeModal: false });
             }
             if (this.props.activeModalSettings) {
-                const formData = new FormData(this.refs.formchatsettings as HTMLFormElement);
-                const data = {"users": [Number(formData.get("user"))], chatId: this.props.current.id};
+                const formData = new FormData(
+                    this.refs.formchatsettings as HTMLFormElement,
+                );
+                const data = {
+                    users: [Number(formData.get("user"))],
+                    chatId: this.props.current.id,
+                };
                 const submitter = (event as SubmitEvent).submitter;
                 if (submitter) {
                     if ((submitter as HTMLInputElement).value == "add") {
                         this.chatlistcontroller.addUser(data as UserRequest);
-                    }
-                    else if ((submitter as HTMLInputElement).value == "remove") {
+                    } else if (
+                        (submitter as HTMLInputElement).value == "remove"
+                    ) {
                         this.chatlistcontroller.deleteUser(data as UserRequest);
                     }
-                    this.setProps({ activeModalSettings: false});
+                    this.setProps({ activeModalSettings: false });
                 }
             }
-        }
-    }
+        },
+    };
 
     protected template = `
     <div class="chatlist">

@@ -23,16 +23,16 @@ export default class Chat extends Block<ChatProps> {
         super(props);
         let state = this.mapStateToProps(Store.getState());
         Store.subscribe(() => {
-          // при обновлении получаем новое состояние
-          const newState = this.mapStateToProps(Store.getState());
+            // при обновлении получаем новое состояние
+            const newState = this.mapStateToProps(Store.getState());
 
-          // если что-то из используемых данных поменялось, обновляем компонент
-          if (!(state == newState)) {
-            this.setProps({ ...newState as Indexed<any>});
-          }
+            // если что-то из используемых данных поменялось, обновляем компонент
+            if (!(state == newState)) {
+                this.setProps({ ...(newState as Indexed<any>) });
+            }
 
-          // не забываем сохранить новое состояние
-          state = newState;
+            // не забываем сохранить новое состояние
+            state = newState;
         });
     }
 
@@ -42,10 +42,7 @@ export default class Chat extends Block<ChatProps> {
             if (this.props.id == state.currentID) {
                 res = true;
             }
-        }
-        catch {
-
-        }
+        } catch {}
         return {
             active: res,
         };
@@ -56,8 +53,8 @@ export default class Chat extends Block<ChatProps> {
             event.stopPropagation();
             Store.setState("current", this.props);
             Store.setState("currentID", this.props.id);
-        }
-    }
+        },
+    };
 
     protected template = `
     <div class="catalog__wrap {{#if active}} catalog__active{{/if}}">

@@ -17,18 +17,18 @@ type FieldName =
 type Errors = Partial<Record<FieldName, string>>;
 
 type SignupData = {
-  first_name: string;
-  second_name: string;
-  login: string;
-  email: string;
-  password: string;
-  phone: string;
-}
+    first_name: string;
+    second_name: string;
+    login: string;
+    email: string;
+    password: string;
+    phone: string;
+};
 
 type SigninData = {
-  login: string;
-  password: string;
-}
+    login: string;
+    password: string;
+};
 
 type Field = {
     label: string;
@@ -55,13 +55,12 @@ export default class Auth extends Block<AuthProps> {
     constructor(props: AuthProps) {
         super(props);
         Store.subscribe(() => {
-        // вызываем обновление компонента, передав данные из хранилища
+            // вызываем обновление компонента, передав данные из хранилища
             this.setProps({ ...Store.getState() });
         });
     }
 
     protected events = {
-
         submit: (event: Event) => {
             event.preventDefault();
 
@@ -102,7 +101,9 @@ export default class Auth extends Block<AuthProps> {
 
         focusout: (event: Event) => {
             event.stopPropagation();
-            if ((event as FocusEvent).relatedTarget instanceof HTMLAnchorElement) {
+            if (
+                (event as FocusEvent).relatedTarget instanceof HTMLAnchorElement
+            ) {
                 return;
             }
             let error = validateField(

@@ -23,12 +23,12 @@ registerComponent(Header);
 registerComponent(Message);
 registerComponent(Chat);
 
-Router.use('/', LogIn);
-Router.use('/sign-up', SignUp);
-Router.use('/settings', UserProfile);
-Router.use('/messenger', ChatList);
-Router.use('/404', NotFound);
-Router.use('/500', InternalServerError);
+Router.use("/", LogIn);
+Router.use("/sign-up", SignUp);
+Router.use("/settings", UserProfile);
+Router.use("/messenger", ChatList);
+Router.use("/404", NotFound);
+Router.use("/500", InternalServerError);
 
 document.addEventListener("DOMContentLoaded", () => {
     Router.start();

@@ -13,7 +13,8 @@ interface LogInProps extends BlockOwnProps {
     fields: Field[];
 }
 
-const fields = {fields: [
+const fields = {
+    fields: [
         {
             label: "Логин",
             inputType: "text",
@@ -28,7 +29,8 @@ const fields = {fields: [
             errortext: "",
             content: "",
         },
-    ]};
+    ],
+};
 
 export default class LogIn extends Block<LogInProps> {
     static componentName = "LogIn";
