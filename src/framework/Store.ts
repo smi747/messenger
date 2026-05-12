@@ -3,7 +3,7 @@ import set from "../utils/set";
 
 type Listener = () => void;
 
-type Indexed<T = any> = {
+type Indexed<T = unknown> = {
     [key in string]: T;
 };
 

@@ -31,7 +31,7 @@ export default class ChatlistController {
             if (result) {
                 Store.setState("chatList", result);
             }
-        } catch (error) {
+        } catch {
             Router.go("/500");
         }
     }
@@ -43,7 +43,7 @@ export default class ChatlistController {
                 Store.setState("current", null);
                 await this.getChats();
             }
-        } catch (error) {
+        } catch {
             Router.go("/500");
         }
     }
@@ -65,7 +65,7 @@ export default class ChatlistController {
             )) as string;
             if (result === "OK") {
             }
-        } catch (error) {
+        } catch {
             Router.go("/500");
         }
     }

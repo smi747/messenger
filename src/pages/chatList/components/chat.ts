@@ -1,7 +1,7 @@
 import Block from "../../../framework/Block";
 import { BlockOwnProps } from "../../../framework/Block";
 import Store from "../../../framework/Store";
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Indexed<T = any> = {
     [key in string]: T;
 };
@@ -11,7 +11,6 @@ interface ChatProps extends BlockOwnProps {
     content: string;
     time: string;
     indicator: string;
-    onclick: any;
     id: number;
     active: boolean;
 }
@@ -28,6 +27,7 @@ export default class Chat extends Block<ChatProps> {
 
             // если что-то из используемых данных поменялось, обновляем компонент
             if (!(state == newState)) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
                 this.setProps({ ...(newState as Indexed<any>) });
             }
 
@@ -35,7 +35,7 @@ export default class Chat extends Block<ChatProps> {
             state = newState;
         });
     }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     private mapStateToProps = (state: Indexed<any>) => {
         let res = false;
         try {

@@ -86,7 +86,7 @@ export default class Auth extends Block<AuthProps> {
                 obj.errortext = "";
             });
             this.setProps({ fields: tmp });
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
             const data: { [key: string]: any } = {};
             for (let [key, value] of formData.entries()) {
                 data[key] = value;

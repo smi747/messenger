@@ -4,8 +4,15 @@ import Router from "../router.js";
 
 const loginAPI = new AuthAPI();
 
-interface APIError {
+interface parsedAPIError {
     reason: string;
+}
+
+interface APIError {
+    status: string,
+    statusText: string,
+    response: string,
+    request: string,
 }
 
 type SignupData = {
@@ -23,8 +30,17 @@ type SigninData = {
 };
 
 type User = {
-    [key: string]: any;
+  id: number;
+  first_name: string;
+  second_name: string;
+  display_name: string;
+  login: string;
+  avatar: string;
+  email: string;
+  phone: string;
 };
+
+
 
 export default class LoginController {
     async login(data: SigninData): Promise<void> {
@@ -35,8 +51,8 @@ export default class LoginController {
                 Router.go("/messenger");
                 Store.setState("userInfo", result);
             }
-        } catch (error: any) {
-            const parsed: APIError = JSON.parse(error.response);
+        } catch (error: unknown) {
+            const parsed: parsedAPIError = JSON.parse((error as APIError).response);
             Store.setState("loginError", parsed.reason);
         }
     }
@@ -61,8 +77,8 @@ export default class LoginController {
                 Store.setState("userInfo", result);
                 Router.go("/messenger");
             }
-        } catch (error: any) {
-            const parsed: APIError = JSON.parse(error.response);
+        } catch (error: unknown) {
+            const parsed: parsedAPIError = JSON.parse((error as APIError).response);
             Store.setState("loginError", parsed.reason);
         }
     }
@@ -74,8 +90,8 @@ export default class LoginController {
             if (result.id) {
                 Store.setState("userInfo", result);
             }
-        } catch (error: any) {
-            const parsed: APIError = JSON.parse(error.response);
+        } catch (error: unknown) {
+            const parsed: parsedAPIError = JSON.parse((error as APIError).response);
             Store.setState("loginError", parsed.reason);
         }
     }

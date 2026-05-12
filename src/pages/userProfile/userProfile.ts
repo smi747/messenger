@@ -7,7 +7,7 @@ import ProfileController from "../../controllers/profileController.js";
 import Store from "../../framework/Store";
 import isEqual from "../../utils/isEqual";
 
-type Indexed<T = any> = {
+type Indexed<T = unknown> = {
     [key in string]: T;
 };
 
@@ -46,7 +46,7 @@ interface UserProfileProps extends BlockOwnProps {
     name: string;
     avatarLink: string;
     fields: Field[];
-    userInfo: Indexed<any>;
+    userInfo: typeof userInfoData;
     formError: string;
     activeModal: boolean;
     loginError: string;
@@ -161,6 +161,7 @@ export default class UserProfile extends Block<UserProfileProps> {
 
             // если что-то из используемых данных поменялось, обновляем компонент
             if (!isEqual(state, newState)) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
                 this.setProps({ ...(newState as Indexed<any>) });
             }
 
@@ -168,7 +169,7 @@ export default class UserProfile extends Block<UserProfileProps> {
             state = newState;
         });
     }
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     private mapStateToProps = (state: Indexed<any>) => {
         const new_fields = this.props.fields.map((field) => {
             let res = structuredClone(field);
@@ -304,7 +305,7 @@ export default class UserProfile extends Block<UserProfileProps> {
                     obj.errortext = "";
                 });
                 this.setProps({ fields: tmp });
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const data: { [key: string]: any } = {};
                 for (let [key, value] of formData.entries()) {
                     data[key] = value;

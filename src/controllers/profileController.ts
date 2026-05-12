@@ -2,7 +2,19 @@ import UsersAPI from "../api/users.js";
 import Store from "../framework/Store";
 import Router from "../router.js";
 
+interface parsedAPIError {
+    reason: string;
+}
+
+interface APIError {
+    status: string,
+    statusText: string,
+    response: string,
+    request: string,
+}
+
 type ProfileData = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 };
 
@@ -13,6 +25,7 @@ type PasswordData = {
 };
 
 type ApiResult = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 };
 
@@ -48,8 +61,8 @@ export default class ProfileController {
             if (result === "OK") {
                 Store.setState("formError", "Пароль успешно изменен!");
             }
-        } catch (error: any) {
-            Store.setState("formError", JSON.parse(error.response).reason);
+        } catch (error: unknown) {
+            Store.setState("formError", JSON.parse((error as APIError).response).reason as parsedAPIError);
         }
     }
 
@@ -67,12 +80,12 @@ export default class ProfileController {
                     dataEdit: false,
                 });
             }
-        } catch (error: any) {
-            Store.setState("formError", JSON.parse(error.response).reason);
+        } catch (error: unknown) {
+            Store.setState("formError", JSON.parse((error as APIError).response).reason as parsedAPIError);
         }
     }
 
-    profileState(n: Record<string, any>): void {
+    profileState(n: Record<string, boolean>): void {
         Store.setState("profileState", n);
     }
 }

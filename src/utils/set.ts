@@ -1,6 +1,6 @@
 import merge from "./merge";
 
-type Indexed<T = any> = {
+type Indexed<T = unknown> = {
     [key in string]: T;
 };
 
@@ -17,6 +17,7 @@ function set(object: Indexed, path: string, value: unknown): Indexed {
         (acc, key) => ({
             [key]: acc,
         }),
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
         value as any,
     );
     return merge(object as Indexed, result);
