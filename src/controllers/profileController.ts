@@ -7,14 +7,14 @@ interface parsedAPIError {
 }
 
 interface APIError {
-    status: string,
-    statusText: string,
-    response: string,
-    request: string,
+    status: string;
+    statusText: string;
+    response: string;
+    request: string;
 }
 
 type ProfileData = {
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 };
 
@@ -25,7 +25,7 @@ type PasswordData = {
 };
 
 type ApiResult = {
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 };
 
@@ -48,7 +48,7 @@ export default class ProfileController {
 
     async setPassword(data: PasswordData): Promise<void> {
         const { oldPassword, newPassword, newPassword_ } = data;
-        if (oldPassword && (newPassword !== newPassword_)) {
+        if (oldPassword && newPassword !== newPassword_) {
             Store.setState("formError", "Пароли не совпадают!");
             return;
         }
@@ -62,7 +62,11 @@ export default class ProfileController {
                 Store.setState("formError", "Пароль успешно изменен!");
             }
         } catch (error: unknown) {
-            Store.setState("formError", JSON.parse((error as APIError).response).reason as parsedAPIError);
+            Store.setState(
+                "formError",
+                JSON.parse((error as APIError).response)
+                    .reason as parsedAPIError,
+            );
         }
     }
 
@@ -81,7 +85,11 @@ export default class ProfileController {
                 });
             }
         } catch (error: unknown) {
-            Store.setState("formError", JSON.parse((error as APIError).response).reason as parsedAPIError);
+            Store.setState(
+                "formError",
+                JSON.parse((error as APIError).response)
+                    .reason as parsedAPIError,
+            );
         }
     }
 

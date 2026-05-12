@@ -9,10 +9,10 @@ interface parsedAPIError {
 }
 
 interface APIError {
-    status: string,
-    statusText: string,
-    response: string,
-    request: string,
+    status: string;
+    statusText: string;
+    response: string;
+    request: string;
 }
 
 type SignupData = {
@@ -30,17 +30,15 @@ type SigninData = {
 };
 
 type User = {
-  id: number;
-  first_name: string;
-  second_name: string;
-  display_name: string;
-  login: string;
-  avatar: string;
-  email: string;
-  phone: string;
+    id: number;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    login: string;
+    avatar: string;
+    email: string;
+    phone: string;
 };
-
-
 
 export default class LoginController {
     async login(data: SigninData): Promise<void> {
@@ -52,7 +50,9 @@ export default class LoginController {
                 Store.setState("userInfo", result);
             }
         } catch (error: unknown) {
-            const parsed: parsedAPIError = JSON.parse((error as APIError).response);
+            const parsed: parsedAPIError = JSON.parse(
+                (error as APIError).response,
+            );
             Store.setState("loginError", parsed.reason);
         }
     }
@@ -78,7 +78,9 @@ export default class LoginController {
                 Router.go("/messenger");
             }
         } catch (error: unknown) {
-            const parsed: parsedAPIError = JSON.parse((error as APIError).response);
+            const parsed: parsedAPIError = JSON.parse(
+                (error as APIError).response,
+            );
             Store.setState("loginError", parsed.reason);
         }
     }
@@ -91,7 +93,9 @@ export default class LoginController {
                 Store.setState("userInfo", result);
             }
         } catch (error: unknown) {
-            const parsed: parsedAPIError = JSON.parse((error as APIError).response);
+            const parsed: parsedAPIError = JSON.parse(
+                (error as APIError).response,
+            );
             Store.setState("loginError", parsed.reason);
         }
     }

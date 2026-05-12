@@ -57,7 +57,7 @@ export default class ChatList extends Block<ChatListProps> {
 
             // если что-то из используемых данных поменялось, обновляем компонент
             if (!isEqual(state, newState)) {
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 this.setProps({ ...(newState as Indexed<any>) });
             }
 
@@ -65,7 +65,7 @@ export default class ChatList extends Block<ChatListProps> {
             state = newState;
         });
     }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private mapStateToProps = (state: Indexed<any>) => {
         return {
             chats: state.chatList,
