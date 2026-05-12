@@ -22,6 +22,7 @@
 }
 
 .profile__avatar {
+    position: relative;
     width: 130px;
     height: 130px;
     border-radius: 50%;
@@ -31,6 +32,11 @@
 
 .profile__avatar_editable {
     &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         font-family: Inter, sans-serif;
         font-weight: 500;
         font-size: 13px;
@@ -39,14 +45,20 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 100%;
         background-color: rgb(0 0 0 / 13.2%);
         opacity: 0;
     }
 
     &:hover::after {
+        cursor: pointer;
         opacity: 1;
     }
+}
+
+.profile__avatarimg {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 
 .profile__name {
@@ -100,6 +112,7 @@
 }
 
 .profile__link {
+    cursor: pointer;
     text-decoration: none;
     color: #3369f3;
     font-family: Inter, sans-serif;
@@ -111,6 +124,10 @@
     color: #f00;
 }
 
+.profile__link_right {
+    margin-left: auto;
+}
+
 .profile__error {
     display: flex;
     align-items: center;
@@ -120,4 +137,78 @@
     font-family: Inter, sans-serif;
     font-weight: 500;
     font-size: 9px;
+}
+
+.profile__error_centered {
+    text-align: center;
+}
+
+.profile__setavatar {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0 0 0 / 50%);
+}
+
+.avatar {
+    position: fixed;
+    background-color: white;
+    width: 340px;
+    border-radius: 12px;
+    box-shadow: 0 0 5px gray;
+    padding: 50px 30px 30px;
+}
+
+.avatar__title {
+    width: 100%;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    margin-bottom: 40px;
+}
+
+.avatar__form {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.avatar__error {
+    height: 12px;
+    color: #ff2f2f;
+    font-family: Inter, sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+}
+
+.avatar__error_centered {
+    text-align: center;
+}
+
+.avatar__confirm {
+    width: 100%;
+    height: 37px;
+    font-size: 13px;
+    text-align: center;
+    background-color: #3369f3;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.avatar__input {
+    text-align: center;
+}
+
+.profile__background {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background-color: rgb(0 0 0 / 50%);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 }

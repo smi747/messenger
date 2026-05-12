@@ -6,7 +6,6 @@ export default class NotFound extends Block {
     protected template = `
 <div class="notfound">
     {{{ Error code="404" text="Not Found" }}}
-{{{ Header }}}
 </div>
   `;
 }
