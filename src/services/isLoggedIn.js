@@ -1,6 +1,6 @@
 import HTTPTransport from "../framework/HTTPTransport";
 const chatAPIInstance = new HTTPTransport(
-    "https://ya-praktikum.tech/api/v2/auth",
+    "/auth",
 );
 
 export async function isLoggedIn() {

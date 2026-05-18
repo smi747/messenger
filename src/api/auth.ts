@@ -16,7 +16,7 @@ type SigninData = {
 };
 
 const chatAPIInstance = new HTTPTransport(
-    "https://ya-praktikum.tech/api/v2/auth",
+    "/auth",
 );
 
 export default class AuthAPI extends BaseAPI {

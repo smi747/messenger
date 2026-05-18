@@ -17,7 +17,7 @@ type UserRequest = {
 };
 
 const chatAPIInstance = new HTTPTransport(
-    "https://ya-praktikum.tech/api/v2/chats",
+    "/chats",
 );
 
 export default class ChatAPI extends BaseAPI {

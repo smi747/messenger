@@ -31,8 +31,10 @@ function queryStringify(data) {
 }
 
 class HTTPTransport {
+    static BASE_URL = "https://ya-praktikum.tech/api/v2";
+
     constructor(root) {
-        this.root_api = root;
+        this.root_api = this.constructor.BASE_URL + root;
     }
 
     get = (url, options = {}) => {
