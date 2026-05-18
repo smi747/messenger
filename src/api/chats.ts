@@ -7,6 +7,10 @@ type AddChatRequest = {
     title: string;
 };
 
+type DeleteChatRequest = {
+    chatId: number;
+};
+
 type UserRequest = {
     users: number[];
     chatId: number;
@@ -23,6 +27,10 @@ export default class ChatAPI extends BaseAPI {
 
     addChat(data: AddChatRequest): Promise<unknown> {
         return chatAPIInstance.post("/", { data });
+    }
+
+    deleteChat(data: DeleteChatRequest): Promise<unknown> {
+        return chatAPIInstance.delete("/", { data });
     }
 
     deleteUser(data: UserRequest): Promise<unknown> {

@@ -12,6 +12,10 @@ type AddChatRequest = {
     title: string;
 };
 
+type DeleteChatRequest = {
+    chatId: number;
+};
+
 type UserRequest = {
     users: number[];
     chatId: number;
@@ -115,6 +119,10 @@ export default class ChatList extends Block<ChatListProps> {
                         (submitter as HTMLInputElement).value == "remove"
                     ) {
                         this.chatlistcontroller.deleteUser(data as UserRequest);
+                    } else if (
+                        (submitter as HTMLInputElement).value == "remove_chat"
+                    ) {
+                        this.chatlistcontroller.deleteChat({chatId: this.props.current.id} as DeleteChatRequest);
                     }
                     this.setProps({ activeModalSettings: false });
                 }
@@ -192,6 +200,7 @@ export default class ChatList extends Block<ChatListProps> {
             <button type="submit" class="newchat__confirm" value="add">Добавить пользователя</button>
             <button type="submit" class="newchat__confirm newchat__confirm_red" value="remove">Удалить пользователя</button>
         </div>
+        <button type="submit" class="newchat__confirm newchat__confirm_red" value="remove_chat">Удалить чат</button>
     </form>
     </div>
     </div>

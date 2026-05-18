@@ -11,10 +11,24 @@ type Chat = {
     last_message: string;
 };
 
+type DeleteResponse = {
+  "userId": number;
+  "result": {
+    "id": number;
+    "title": string;
+    "avatar": string;
+    "created_by": number;
+  };
+};
+
 type GetChatsRequest = Record<string, unknown>;
 
 type AddChatRequest = {
     title: string;
+};
+
+type DeleteChatRequest = {
+    chatId: number;
 };
 
 type UserRequest = {
@@ -40,6 +54,18 @@ export default class ChatlistController {
         try {
             const result: Chat = (await chatlistAPI.addChat(data)) as Chat;
             if (result?.id) {
+                Store.setState("current", null);
+                await this.getChats();
+            }
+        } catch {
+            Router.go("/500");
+        }
+    }
+
+    async deleteChat(data: DeleteChatRequest): Promise<void> {
+        try {
+            const result: DeleteResponse = (await chatlistAPI.deleteChat(data)) as DeleteResponse;
+            if (result?.result) {
                 Store.setState("current", null);
                 await this.getChats();
             }
