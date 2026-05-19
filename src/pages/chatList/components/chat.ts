@@ -8,6 +8,7 @@ type Indexed<T = any> = {
 
 interface ChatProps extends BlockOwnProps {
     name: string;
+    avatar: string;
     content: string;
     time: string;
     indicator: string;
@@ -59,7 +60,7 @@ export default class Chat extends Block<ChatProps> {
     protected template = `
     <div class="catalog__wrap {{#if active}} catalog__active{{/if}}">
     <div class="catalog__element">
-        <div class="catalog__avatar"></div>
+        <div class="catalog__avatar">{{#if avatar}}<img class="catalog__avatarimg" src="https://ya-praktikum.tech/api/v2/resources/{{avatar}}">{{/if}}</div>
         <div class="catalog__info">
             <div class="catalog__name">{{name}}</div>
             <div class="catalog__content">{{content}}</div>

@@ -142,7 +142,7 @@ export default class ChatList extends Block<ChatListProps> {
         </div>
         <div class="catalog__list">
             {{#each chats}}
-                {{{ Chat name=this.title content=this.last_message time=this.last_message.time indicator=this.unread_count id=this.id}}}
+                {{{ Chat name=this.title content=this.last_message time=this.last_message.time indicator=this.unread_count id=this.id avatar=this.avatar}}}
             {{/each}}
         </div>
     </div>
@@ -150,7 +150,7 @@ export default class ChatList extends Block<ChatListProps> {
         <div class="chat__top">
         {{#if current}}
             <div class="chat__info">
-                <div class="chat__avatar"></div>
+                <div class="chat__avatar">{{#if current.avatar}}<img class="chat__avatarimg" src="https://ya-praktikum.tech/api/v2/resources/{{current.avatar}}">{{/if}}</div>
                 <div class="chat__name">{{current.name}}</div>
             </div>
             <button class="chat__functions" ref="chatsettings">
