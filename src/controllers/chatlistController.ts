@@ -21,6 +21,11 @@ type DeleteResponse = {
   };
 };
 
+type ApiResult = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+};
+
 type GetChatsRequest = Record<string, unknown>;
 
 type AddChatRequest = {
@@ -95,4 +100,17 @@ export default class ChatlistController {
             Router.go("/500");
         }
     }
+
+    async setAvatar(data: FormData): Promise<void> {
+            try {
+                const result: ApiResult = (await chatlistAPI.setAvatar(
+                    data,
+                )) as ApiResult;
+
+                if (result.id) {
+                    await this.getChats();
+                }
+            } catch {
+            }
+        }
 }

@@ -40,4 +40,9 @@ export default class ChatAPI extends BaseAPI {
     addUser(data: UserRequest): Promise<unknown> {
         return chatAPIInstance.put("/users", { data });
     }
+
+    setAvatar(data: FormData): Promise<unknown> {
+        return chatAPIInstance.put("/avatar", { data });
+    }
+
 }
