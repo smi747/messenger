@@ -11,6 +11,20 @@ type Chat = {
     last_message: string;
 };
 
+type User = {
+    "id": number,
+    "first_name": string,
+    "second_name": string,
+    "display_name": string,
+    "login": string,
+    "avatar": string,
+    "role": string
+};
+
+type Users ={
+    users: User[];
+}
+
 type DeleteResponse = {
   "userId": number;
   "result": {
@@ -111,6 +125,18 @@ export default class ChatlistController {
                     await this.getChats();
                 }
             } catch {
+        }
+    }
+
+    async getUsers(data:string): Promise<void> {
+            try {
+                const result = (await chatlistAPI.getUsers(data)) as Users;
+
+                if (result) {
+                    Store.setState("users", result);
+                }
+            } catch {
+                Router.go("/500");
             }
         }
 }

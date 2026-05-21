@@ -45,4 +45,8 @@ export default class ChatAPI extends BaseAPI {
         return chatAPIInstance.put("/avatar", { data });
     }
 
+    getUsers(data: string): Promise<unknown> {
+        return chatAPIInstance.get("/"+data+"/users");
+    }
+
 }

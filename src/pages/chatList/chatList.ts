@@ -27,6 +27,20 @@ type Message = {
     time: string;
 };
 
+type User = {
+    "id": number,
+    "first_name": string,
+    "second_name": string,
+    "display_name": string,
+    "login": string,
+    "avatar": string,
+    "role": string
+};
+
+type Users ={
+    users: User[];
+}
+
 type Chat = {
     id: number;
     title: string;
@@ -44,6 +58,7 @@ interface ChatListProps extends BlockOwnProps {
     activeModalSettings: boolean;
     activeModalAvatar: boolean;
     avatarError: string;
+    users: Users;
 }
 
 export default class ChatList extends Block<ChatListProps> {
@@ -54,6 +69,7 @@ export default class ChatList extends Block<ChatListProps> {
         super(props);
         Store.setState("chatList", this.props.chats);
         Store.setState("current", null);
+        Store.setState("users", null);
         this.chatlistcontroller.getChats();
 
         let state = this.mapStateToProps(Store.getState());
@@ -76,6 +92,7 @@ export default class ChatList extends Block<ChatListProps> {
         return {
             chats: state.chatList,
             current: structuredClone(state.current),
+            users: state.users,
         };
     };
 
@@ -96,6 +113,7 @@ export default class ChatList extends Block<ChatListProps> {
                 this.setProps({ activeModal: true });
             }
             if (event.target == this.refs.chatsettings) {
+                this.chatlistcontroller.getUsers(String(this.props.current.id));
                 this.setProps({ activeModalSettings: true });
             }
         },
@@ -232,7 +250,11 @@ export default class ChatList extends Block<ChatListProps> {
         <div class="newchat__avatar newchat__avatar_editable" ref="changeavatar">{{#if current.avatar}}<img class="newchat__avatarimg" src="https://ya-praktikum.tech/api/v2/resources/{{current.avatar}}">{{/if}}</div>
                 <div class="newchat__line">
                     <div class="newchat__fieldname">ID пользователя</div>
-                    <input class="newchat__fieldvalue" name="user" placeholder="1234">
+                    <input class="newchat__fieldvalue" list="userlist" name="user" autocomplete="off" placeholder="1234">
+                    <datalist id="userlist">
+                    {{#each users}}
+                    <option value="{{this.id}}" >{{this.first_name}}</option>{{/each}}
+                    </datalist>
                 </div>
         <div class="newchat__buttons">
             <button type="submit" class="newchat__confirm" value="add">Добавить пользователя</button>
