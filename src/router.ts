@@ -1,42 +1,55 @@
 import { isLoggedIn } from "./services/isLoggedIn.js";
 
-function isEqual(lhs, rhs) {
+import type Block from "./framework/Block";
+
+type BlockClass = new () => Block;
+
+interface RouteProps {
+    rootQuery: string;
+}
+
+function isEqual(lhs: string, rhs: string): boolean {
     return lhs === rhs;
 }
 
-function render(query, block) {
+function render(query: string, block: Block): HTMLElement | null {
     const root = document.getElementById(query);
+
+    if (!root) {
+        return null;
+    }
+
     root.innerHTML = "";
-    root.appendChild(block.element());
+    root.appendChild(block.element() as Element);
+
     return root;
 }
 
 class Route {
-    constructor(pathname, view, props) {
+    private _pathname: string;
+    private _blockClass: BlockClass;
+    private _block: Block | null;
+    private _props: RouteProps;
+
+    constructor(pathname: string, view: BlockClass, props: RouteProps) {
         this._pathname = pathname;
         this._blockClass = view;
         this._block = null;
         this._props = props;
     }
 
-    navigate(pathname) {
+    navigate(pathname: string): void {
         if (this.match(pathname)) {
             this._pathname = pathname;
             this.render();
         }
     }
 
-    leave() {
-        if (this._block) {
-            this._block.hide();
-        }
-    }
-
-    match(pathname) {
+    match(pathname: string): boolean {
         return isEqual(pathname, this._pathname);
     }
 
-    render() {
+    render(): void {
         if (!this._block) {
             this._block = new this._blockClass();
         }
@@ -46,20 +59,21 @@ class Route {
 }
 
 class Router {
+    private static __instance: Router;
+
+    private routes: Route[] = [];
+    private history: History = window.history;
+    private _rootQuery = "app";
+
     constructor() {
         if (Router.__instance) {
             return Router.__instance;
         }
 
-        this.routes = [];
-        this.history = window.history;
-        this._currentRoute = null;
-        this._rootQuery = "app";
-
         Router.__instance = this;
     }
 
-    use(pathname, block) {
+    use(pathname: string, block: BlockClass): Router {
         const route = new Route(pathname, block, {
             rootQuery: this._rootQuery,
         });
@@ -69,43 +83,49 @@ class Router {
         return this;
     }
 
-    start() {
-        // Реагируем на изменения в адресной строке и вызываем перерисовку
-        window.onpopstate = (event) => {
-            this._onRoute(event.currentTarget.location.pathname);
+    start(): void {
+        window.onpopstate = (event: PopStateEvent) => {
+            const target = event.currentTarget as Window;
+
+            this._onRoute(target.location.pathname);
         };
 
         this._onRoute(window.location.pathname);
     }
 
-    _onRoute(pathname) {
+    private _onRoute(pathname: string): void {
         const route = this.getRoute(pathname);
+
         if (!route) {
             this.go("/404");
             return;
         }
-        isLoggedIn().then((result) => {
-            if (result && (pathname == "/" || pathname == "/sign-up")) {
+
+        isLoggedIn().then((result: boolean) => {
+            if (result && (pathname === "/" || pathname === "/sign-up")) {
                 this.go("/messenger");
                 return;
-            } else if (
+            }
+
+            if (
                 !result &&
-                !(pathname == "/" || pathname == "/sign-up")
+                pathname !== "/" &&
+                pathname !== "/sign-up"
             ) {
                 this.go("/");
                 return;
-            } else {
-                route.render(route, pathname);
             }
+
+            route.render();
         });
     }
 
-    go(pathname) {
+    go(pathname: string): void {
         this.history.pushState({}, "", pathname);
         this._onRoute(pathname);
     }
 
-    getRoute(pathname) {
+    getRoute(pathname: string): Route | undefined {
         return this.routes.find((route) => route.match(pathname));
     }
 }

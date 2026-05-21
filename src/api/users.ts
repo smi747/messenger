@@ -11,7 +11,7 @@ type PasswordData = {
     newPassword_: string;
 };
 
-interface SearchUsersData {
+type SearchUsersData = {
     login: string;
 }
 

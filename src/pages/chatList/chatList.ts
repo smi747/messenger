@@ -65,8 +65,8 @@ export default class ChatList extends Block<ChatListProps> {
     static componentName = "ChatList";
     private chatlistcontroller = new ChatlistController();
 
-    constructor(props: ChatListProps) {
-        super(props);
+    constructor() {
+        super();
         Store.setState("chatList", this.props.chats);
         Store.setState("current", null);
         Store.setState("users", null);
