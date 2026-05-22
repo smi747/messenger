@@ -17,8 +17,7 @@ function set(object: Indexed, path: string, value: unknown): Indexed {
         (acc, key) => ({
             [key]: acc,
         }),
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        value as any,
+        value as Indexed,
     );
     return merge(object as Indexed, result);
 }

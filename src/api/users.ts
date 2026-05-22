@@ -2,7 +2,7 @@ import HTTPTransport from "../framework/HTTPTransport.js";
 import { BaseAPI } from "../framework/BaseAPI";
 
 interface ProfileData {
-    [key: string]: string;
+    [key: string]: FormDataEntryValue;
 }
 
 type PasswordData = {

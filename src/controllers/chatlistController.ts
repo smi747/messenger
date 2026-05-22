@@ -36,8 +36,7 @@ type DeleteResponse = {
 };
 
 type ApiResult = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
+    [key: string]: unknown;
 };
 
 type GetChatsRequest = Record<string, unknown>;

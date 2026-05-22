@@ -1,6 +1,5 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type PlainObject<T = any> = {
-    [k in string]: T;
+type PlainObject<T = unknown> = {
+    [k: string]: T;
 };
 
 function isPlainObject(value: unknown): value is PlainObject {
@@ -12,11 +11,13 @@ function isPlainObject(value: unknown): value is PlainObject {
     );
 }
 
-function isArray(value: unknown): value is [] {
+function isArray(value: unknown): value is unknown[] {
     return Array.isArray(value);
 }
 
-function isArrayOrObject(value: unknown): value is [] | PlainObject {
+function isArrayOrObject(
+    value: unknown,
+): value is unknown[] | PlainObject {
     return isPlainObject(value) || isArray(value);
 }
 
@@ -27,10 +28,12 @@ function isEqual(lhs: PlainObject, rhs: PlainObject) {
 
     for (const [key, value] of Object.entries(lhs)) {
         const rightValue = rhs[key];
+
         if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-            if (isEqual(value, rightValue)) {
+            if (isEqual(value as PlainObject, rightValue as PlainObject)) {
                 continue;
             }
+
             return false;
         }
 

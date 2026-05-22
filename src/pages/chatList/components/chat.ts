@@ -1,8 +1,7 @@
 import Block from "../../../framework/Block";
 import { BlockOwnProps } from "../../../framework/Block";
 import Store from "../../../framework/Store";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Indexed<T = any> = {
+type Indexed<T = unknown> = {
     [key in string]: T;
 };
 
@@ -24,20 +23,19 @@ export default class Chat extends Block<ChatProps> {
         let state = this.mapStateToProps(Store.getState());
         Store.subscribe(() => {
             // при обновлении получаем новое состояние
+            console.log(state);
             const newState = this.mapStateToProps(Store.getState());
 
             // если что-то из используемых данных поменялось, обновляем компонент
             if (!(state == newState)) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                this.setProps({ ...(newState as Indexed<any>) });
+                this.setProps({ ...(newState as Indexed<unknown>) });
             }
 
             // не забываем сохранить новое состояние
             state = newState;
         });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private mapStateToProps = (state: Indexed<any>) => {
+    private mapStateToProps = (state: Indexed<unknown>) => {
         let res = false;
         try {
             if (this.props.id == state.currentID) {

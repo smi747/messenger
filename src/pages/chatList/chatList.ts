@@ -3,8 +3,8 @@ import { BlockOwnProps } from "../../framework/Block";
 import ChatlistController from "../../controllers/chatlistController";
 import Store from "../../framework/Store";
 import isEqual from "../../utils/isEqual";
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Indexed<T = any> = {
+
+type Indexed<T = unknown> = {
     [key in string]: T;
 };
 
@@ -79,16 +79,14 @@ export default class ChatList extends Block<ChatListProps> {
 
             // если что-то из используемых данных поменялось, обновляем компонент
             if (!isEqual(state, newState)) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                this.setProps({ ...(newState as Indexed<any>) });
+                this.setProps({ ...(newState as Indexed<unknown>) });
             }
 
             // не забываем сохранить новое состояние
             state = newState;
         });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private mapStateToProps = (state: Indexed<any>) => {
+    private mapStateToProps = (state: Indexed<unknown>) => {
         return {
             chats: state.chatList,
             current: structuredClone(state.current),
