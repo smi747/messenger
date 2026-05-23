@@ -10,6 +10,10 @@ interface MessageProps extends BlockOwnProps {
 export default class Message extends Block<MessageProps> {
     static componentName = "Message";
 
+    constructor(props: MessageProps) {
+        super(props);
+    }
+
     protected template = `
     <div class="chat__message {{#if my}}chat__message_my{{/if}}">
     {{content}}

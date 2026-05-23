@@ -12,6 +12,10 @@ interface LinkProps extends BlockOwnProps {
 export default class Link extends Block<LinkProps> {
     static componentName = "Link";
 
+    constructor(props: LinkProps) {
+        super(props);
+    }
+
     protected events = {
         click: (event: Event) => {
             event.preventDefault();

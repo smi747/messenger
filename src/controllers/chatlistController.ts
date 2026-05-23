@@ -122,6 +122,7 @@ export default class ChatlistController {
 
                 if (result.id) {
                     await this.getChats();
+                Store.setState("current", null);
                 }
             } catch {
         }
