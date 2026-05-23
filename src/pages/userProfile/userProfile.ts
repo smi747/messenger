@@ -7,8 +7,20 @@ import ProfileController from "../../controllers/profileController.js";
 import Store from "../../framework/Store";
 import isEqual from "../../utils/isEqual";
 
+type User = {
+    id: number;
+    first_name: string;
+    second_name: string;
+    display_name: string;
+    login: string;
+    avatar: string;
+    email: string;
+    phone: string;
+};
+
 type Indexed<T = unknown> = {
     [key in string]: T;
+} & {userInfo: User;
 };
 
 type FieldName =
@@ -154,23 +166,21 @@ export default class UserProfile extends Block<UserProfileProps> {
         Store.setState("userInfo", this.props.userInfo);
         Store.setState("profileState", this.props.state);
         this.logincontroller.getUser();
-        let state = this.mapStateToProps(Store.getState());
+        let state = this.mapStateToProps(Store.getState() as Indexed<unknown>);
         Store.subscribe(() => {
             // при обновлении получаем новое состояние
-            const newState = this.mapStateToProps(Store.getState());
+            const newState = this.mapStateToProps(Store.getState() as Indexed<unknown>);
 
             // если что-то из используемых данных поменялось, обновляем компонент
             if (!isEqual(state, newState)) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                this.setProps({ ...(newState as Indexed<any>) });
+                this.setProps({ ...(newState as Indexed<unknown>) });
             }
 
             // не забываем сохранить новое состояние
             state = newState;
         });
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private mapStateToProps = (state: Indexed<any>) => {
+    private mapStateToProps = (state: Indexed<unknown>) => {
         const new_fields = this.props.fields.map((field) => {
             let res = structuredClone(field);
             for (const [key, value] of Object.entries(state.userInfo)) {
@@ -305,8 +315,7 @@ export default class UserProfile extends Block<UserProfileProps> {
                     obj.errortext = "";
                 });
                 this.setProps({ fields: tmp });
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const data: { [key: string]: any } = {};
+                const data: { [key: string]: FormDataEntryValue } = {};
                 for (let [key, value] of formData.entries()) {
                     data[key] = value;
                 }

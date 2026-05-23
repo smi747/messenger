@@ -2,7 +2,7 @@ import HTTPTransport from "../framework/HTTPTransport.js";
 import { BaseAPI } from "../framework/BaseAPI";
 
 interface ProfileData {
-    [key: string]: string;
+    [key: string]: FormDataEntryValue;
 }
 
 type PasswordData = {
@@ -11,12 +11,12 @@ type PasswordData = {
     newPassword_: string;
 };
 
-interface SearchUsersData {
+type SearchUsersData = {
     login: string;
 }
 
 const chatAPIInstance = new HTTPTransport(
-    "https://ya-praktikum.tech/api/v2/user",
+    "/user",
 );
 
 export default class AuthAPI extends BaseAPI {

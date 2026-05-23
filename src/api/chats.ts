@@ -7,13 +7,17 @@ type AddChatRequest = {
     title: string;
 };
 
+type DeleteChatRequest = {
+    chatId: number;
+};
+
 type UserRequest = {
     users: number[];
     chatId: number;
 };
 
 const chatAPIInstance = new HTTPTransport(
-    "https://ya-praktikum.tech/api/v2/chats",
+    "/chats",
 );
 
 export default class ChatAPI extends BaseAPI {
@@ -25,6 +29,10 @@ export default class ChatAPI extends BaseAPI {
         return chatAPIInstance.post("/", { data });
     }
 
+    deleteChat(data: DeleteChatRequest): Promise<unknown> {
+        return chatAPIInstance.delete("/", { data });
+    }
+
     deleteUser(data: UserRequest): Promise<unknown> {
         return chatAPIInstance.delete("/users", { data });
     }
@@ -32,4 +40,13 @@ export default class ChatAPI extends BaseAPI {
     addUser(data: UserRequest): Promise<unknown> {
         return chatAPIInstance.put("/users", { data });
     }
+
+    setAvatar(data: FormData): Promise<unknown> {
+        return chatAPIInstance.put("/avatar", { data });
+    }
+
+    getUsers(data: string): Promise<unknown> {
+        return chatAPIInstance.get("/"+data+"/users");
+    }
+
 }

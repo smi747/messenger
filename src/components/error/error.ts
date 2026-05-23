@@ -9,6 +9,10 @@ interface ErrorProps extends BlockOwnProps {
 export default class Error extends Block<ErrorProps> {
     static componentName = "Error";
 
+    constructor(props: ErrorProps) {
+        super(props);
+    }
+
     protected template = `
     <div class="error">
     <div class="error__code">{{code}}</div>

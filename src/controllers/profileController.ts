@@ -14,8 +14,7 @@ interface APIError {
 }
 
 type ProfileData = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
+    [key: string]: FormDataEntryValue;
 };
 
 type PasswordData = {
@@ -25,8 +24,7 @@ type PasswordData = {
 };
 
 type ApiResult = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
+    [key: string]: unknown;
 };
 
 const profileAPI = new UsersAPI();

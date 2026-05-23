@@ -11,10 +11,42 @@ type Chat = {
     last_message: string;
 };
 
+type User = {
+    "id": number,
+    "first_name": string,
+    "second_name": string,
+    "display_name": string,
+    "login": string,
+    "avatar": string,
+    "role": string
+};
+
+type Users ={
+    users: User[];
+}
+
+type DeleteResponse = {
+  "userId": number;
+  "result": {
+    "id": number;
+    "title": string;
+    "avatar": string;
+    "created_by": number;
+  };
+};
+
+type ApiResult = {
+    [key: string]: unknown;
+};
+
 type GetChatsRequest = Record<string, unknown>;
 
 type AddChatRequest = {
     title: string;
+};
+
+type DeleteChatRequest = {
+    chatId: number;
 };
 
 type UserRequest = {
@@ -48,6 +80,18 @@ export default class ChatlistController {
         }
     }
 
+    async deleteChat(data: DeleteChatRequest): Promise<void> {
+        try {
+            const result: DeleteResponse = (await chatlistAPI.deleteChat(data)) as DeleteResponse;
+            if (result?.result) {
+                Store.setState("current", null);
+                await this.getChats();
+            }
+        } catch {
+            Router.go("/500");
+        }
+    }
+
     async addUser(data: UserRequest): Promise<void> {
         try {
             const result: string = (await chatlistAPI.addUser(data)) as string;
@@ -69,4 +113,30 @@ export default class ChatlistController {
             Router.go("/500");
         }
     }
+
+    async setAvatar(data: FormData): Promise<void> {
+            try {
+                const result: ApiResult = (await chatlistAPI.setAvatar(
+                    data,
+                )) as ApiResult;
+
+                if (result.id) {
+                    await this.getChats();
+                Store.setState("current", null);
+                }
+            } catch {
+        }
+    }
+
+    async getUsers(data:string): Promise<void> {
+            try {
+                const result = (await chatlistAPI.getUsers(data)) as Users;
+
+                if (result) {
+                    Store.setState("users", result);
+                }
+            } catch {
+                Router.go("/500");
+            }
+        }
 }
