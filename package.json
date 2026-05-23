@@ -8,7 +8,7 @@
     "scripts": {
         "prebuild": "tsc --noEmit",
         "build": "tsc --noEmit && vite build",
-        "start": "tsc --noEmit && vite build && node server.js",
+        "start": "tsc --noEmit && vite build && node server.cjs",
         "pretty": "prettier --write \"./**/*.{js,jsx,mjs,cjs,ts,tsx,json,scss,css}\"",
         "lint:js": "eslint",
         "lint:js:fix": "eslint --fix",

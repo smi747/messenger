@@ -44,6 +44,21 @@ export function validateField(name: string, value: string): string | null {
                 ? null
                 : "Минимум 8 символов, 1 заглавная, 1 цифра";
 
+        case "oldPassword":
+            return regex.password.test(value)
+                ? null
+                : "Минимум 8 символов, 1 заглавная, 1 цифра";
+
+        case "newPassword":
+            return regex.password.test(value)
+                ? null
+                : "Минимум 8 символов, 1 заглавная, 1 цифра";
+
+        case "newPassword_":
+            return regex.password.test(value)
+                ? null
+                : "Минимум 8 символов, 1 заглавная, 1 цифра";
+
         case "phone":
             return regex.phone.test(value) ? null : "10–15 цифр, можно с +";
 

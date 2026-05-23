@@ -1,16 +1,27 @@
 import Handlebars from "handlebars";
 import { HelperOptions } from "handlebars";
+import Block, { BlockOwnProps } from "./Block";
 
 let uniqueId = 0;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function registerComponent(Component: any) {
+type BlockConstructor<
+    P extends BlockOwnProps = BlockOwnProps,
+    T extends Block<P> = Block<P>
+> = {
+    new (props: P): T;
+    componentName: string;
+};
+
+function registerComponent<
+    P extends BlockOwnProps = BlockOwnProps,
+    T extends Block<P> = Block<P>
+>(Component: BlockConstructor<P, T>) {
     const dataAttribute = `data-component-hbs-id="${++uniqueId}"`;
 
     Handlebars.registerHelper(
         Component.componentName,
         function (this: unknown, { hash, data }: HelperOptions) {
-            const component = new Component(hash);
+            const component = new Component(hash as P);
 
             if ("ref" in hash) {
                 (data.root.__refs = data.root.__refs || {})[hash.ref] =
@@ -23,6 +34,7 @@ function registerComponent(Component: any) {
                     const placeholder = node.querySelector(
                         `[${dataAttribute}]`,
                     );
+
                     if (!placeholder) {
                         throw new Error(
                             `Can't find data-id for component ${Component.componentName}`,
@@ -30,6 +42,7 @@ function registerComponent(Component: any) {
                     }
 
                     const element = component.element();
+
                     if (!element) {
                         throw new Error("Component element is not created");
                     }
@@ -38,7 +51,9 @@ function registerComponent(Component: any) {
                 },
             });
 
-            return new Handlebars.SafeString(`<div ${dataAttribute}></div>`);
+            return new Handlebars.SafeString(
+                `<div ${dataAttribute}></div>`,
+            );
         },
     );
 }

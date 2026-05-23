@@ -23,7 +23,10 @@ export default [
             // вот это
             "sort-vars": "error",
             "no-unused-vars": "off",
-            "@typescript-eslint/no-unused-vars": ["error"],
+            "@typescript-eslint/no-unused-vars": [
+                "error",
+                { argsIgnorePattern: "^_" },
+            ],
         },
     },
 ];
